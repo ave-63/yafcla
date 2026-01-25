@@ -20,8 +20,8 @@
 \setmonofont{Source Code Pro}[Scale=MatchLowercase]
 
 \newif\iflecturenotes
-\lecturenotestrue  % comment out with % for textbook
-%\lecturenotesfalse % comment out with % for lecture notes
+%\lecturenotestrue  % comment out with % for textbook
+\lecturenotesfalse % comment out with % for lecture notes
 
 \iflecturenotes
   % Lecture notes version: show notes, hide book content
@@ -7002,7 +7002,7 @@ If $A$ is an $r \times c$ matrix, and there exists a matrix $Q$ such that $AQ = 
 \end{notes}
 
 \begin{definition}
-An \textbf{elementary matrix} is the result of applying a \emph{single} row operation (swapping, scaling, or multaddiplacement) to an identity matrix.
+An \textbf{elementary matrix} is the result of applying a \emph{single} row operation or column operation (swapping, scaling, or multaddiplacement) to an identity matrix.
 \end{definition}
 
 \example Here are some elementary matrices:
@@ -7055,38 +7055,10 @@ An \textbf{elementary matrix} is the result of applying a \emph{single} row oper
 \begin{notes}
 \columnbreak
 \end{notes}
-We'll soon see that multiplication by an elementary matrix \emph{does} the corresponding row operation, but we need a little more machinery to prove it first.
-Recall the definition of $AB = \begin{bmatrix}
-A\vec{b}_1 & \cdots & A\vec{b}_c
-\end{bmatrix}$ shows that column $j$ of $AB$ is a linear combination of the columns of $A$, using the entries from $\vec{b}_j$ as weights. The next theorem shows an analogous result about rows.
 
-\begin{theorem}[Rows of $BA$.]\label{theorem:rows-of-BA}
+The next two examples provide evidence for theorem \ref{theorem:elementary-column-operations} below.
 
-Suppose $B$ is a $d \times r$ matrix, and A is an $r \times c$ matrix. Write the rows of $B$ as column vectors $\vec{\beta}_1, \ldots \vec{\beta}_d$, so that $B = \bbbvec{\vec{\beta}_1^T}{\vdots}{\vec{\beta}_d^T}$. Then row $i$ of $BA$ is $\vec{\beta}_i^TA$ which is a linear combination of the rows of $A$ using the entries in $\vec{\beta}_i$ as weights.
-\end{theorem}
-% prove this in class too!
-
-\begin{book}
-\textbf{Proof.} Row $i$ of $BA$ is column $j$ of $(BA)^T$, which can be written:
-\begin{align*}
- (BA)^T &= A^TB^T  & \text{(thm \ref{theorem:ABT-BTAT})} \\
-&= A^T\begin{bmatrix}
-\vec{\beta}_1 & \cdots & \vec{\beta}_d
-\end{bmatrix} \\
-&= \begin{bmatrix}
-A^T\vec{\beta}_1 & \cdots & A^T\vec{\beta}_d
-\end{bmatrix}
-\end{align*}
-Column $j$ of this matrix, $A^T\vec{\beta}_j$, is a linear combination of the columns of $A^T$, \emph{which are rows of $A$}, using entries in $\vec{\beta}_j$ as weights. Also, transposing this column of $(BA)^T$ back into a row of $BA$ gives: 
-\[(A^T\vec{\beta}_j)^T = \vec{\beta}_j^T(A^{T})^T = \vec{\beta}_j^TA \]
-\blacksquare
-\end{book}
-
-\begin{notes}
-\vfill \hspace{2pt}
-\columnbreak
-\end{notes}
-\example Let $E=\begin{bmatrix}
+\example  Let $E=\begin{bmatrix}
 1 & 0 \\
 \pi & 1
 \end{bmatrix}$, $F=\begin{bmatrix}
@@ -7097,80 +7069,48 @@ a & b \\
 c & d
 \end{bmatrix}$.
 \begin{enumerate}[label=(\alph*)]
-\item Multiply $EA$ and $FA$ using theorem \ref{theorem:rows-of-BA}. What do you notice?
+\item Multiply $AE$ and $AF$. What do you notice?
 \item Find $F^{-1}$.
 \end{enumerate}
 
-\begin{book}
-\textbf{Solution.} (a) Write the rows of $E$ as vectors: $\vec{\epsilon}_1 = \bbvec{1}{0}, \vec{\epsilon}_2= \bbvec{\pi}{1}$ so that $E = \bbvec{\vec{\epsilon}_1^T}{\vec{\epsilon}_2^T}$. Using theorem \ref{theorem:rows-of-BA}:
-\[
-EA = \bbvec{\vec{\epsilon}_1^TA}{\vec{\epsilon}_2^TA} 
-  = \bbvec{\begin{bmatrix}
-1 & 0
-\end{bmatrix}\begin{bmatrix}
-a & b \\
-c & d
-\end{bmatrix}}{\begin{bmatrix}
-\pi & 1
-\end{bmatrix}\begin{bmatrix}
-a & b \\
-c & d
-\end{bmatrix}}
-= \bbvec{1\begin{bmatrix}
-a & b
-\end{bmatrix} + 0\begin{bmatrix}
-c & d
-\end{bmatrix}}{\pi\begin{bmatrix}
-a & b
-\end{bmatrix} + 1\begin{bmatrix}
-c & d
-\end{bmatrix}}
-= \begin{bmatrix}
-a & b \\
-\pi a + c & \pi b + d
-\end{bmatrix}
-\]
-Notice that $EA$ is the result of replacing row 2 of $A$ with the sum of row 2 and $\pi$ times row 1; the same row operation that was done to $I$ to get $E$. Likewise:
-\[ FA
-  = \bbvec{\begin{bmatrix}
--3 & 0
-\end{bmatrix}\begin{bmatrix}
-a & b \\
-c & d
-\end{bmatrix}}{\begin{bmatrix}
-0 & 1
-\end{bmatrix}\begin{bmatrix}
-a & b \\
-c & d
-\end{bmatrix}}
-= \bbvec{-3\begin{bmatrix}
-a & b
-\end{bmatrix} + 0\begin{bmatrix}
-c & d
-\end{bmatrix}}{0\begin{bmatrix}
-a & b
-\end{bmatrix} + 1\begin{bmatrix}
-c & d
-\end{bmatrix}}
-= \begin{bmatrix}
--3a & -3b \\
- c &  d
-\end{bmatrix}
-\]
-Again, $FA$ is the result of scaling row 1 of $A$ by $-3$; the same row operation that was done to $I$ to get $E$.
-
-For (b), to make $FF^{-1}=I$, we want to scale row 1 of $F^{-1}$ by $-3$ to get $\begin{bmatrix}
-1 & 0
-\end{bmatrix}$. A good idea would be $F^{-1}=\begin{bmatrix}
-\frac{-1}{3} & 0 \\
-0 & 1
-\end{bmatrix}$, if the multiplication $FF^{-1}$ works like it does in part (a). The reader should check that it does, and also that $F^{-1}F = I$. \blacksquare
-\end{book}
-
 \begin{notes}
-\vfill \hspace{2pt}
+\vfill
 \columnbreak
 \end{notes}
+
+\begin{book}
+\textbf{Solution.} (a) Using the definition of matrix by vector multiplication:
+\begin{align*}
+AE &= \begin{bmatrix}
+A \bbvec{1}{\pi} & A \bbvec{0}{1}
+\end{bmatrix}= \begin{bmatrix}
+1 \bbvec{a}{c} + \pi \bbvec{b}{d} & 0 \bbvec{a}{c} + 1 \bbvec{b}{d}
+\end{bmatrix} = \begin{bmatrix}
+a + \pi b & b \\
+c + \pi d & d
+\end{bmatrix}
+\end{align*}
+Notice that $AE$ is the result of applying the same column operation to $A$ which was done to $I$ to get $E$. Likewise:
+\begin{align*}
+AF =  \begin{bmatrix}
+A \bbvec{-3}{0} & A \bbvec{0}{1}
+\end{bmatrix}= \begin{bmatrix}
+-3 \bbvec{a}{c} + 0\bbvec{b}{d} & 0 \bbvec{a}{c} + 1 \bbvec{b}{d}
+\end{bmatrix} = \begin{bmatrix}
+-3a  & b \\
+-3c  & d
+\end{bmatrix}
+\end{align*}
+Again, $AF$ is the result of scaling the first column of $A$ by $-3$, which is the same column operation that was done to $I$ to get $F$.
+
+(b) Notice that $F$ can be transformed back to $I$ by scaling column $1$ by $\frac{-1}{3}$. This is the ``inverse'' of the $I \rightarrow F$ scaling operation. To make $FF^{-1} = I$, we want $FF^{-1}$ to be the result of applying this inverse scaling operation to $F$. So we should get $F^{-1}$ by doing this operation to $I$:
+\[F^{-1} = \begin{bmatrix}
+-1/3 & 0 \\
+0 & 1
+\end{bmatrix}\]
+The reader should check that $FF^{-1} = I$. Also notice that $F^{-1}F$ should be the result of scaling column 1 of $F^{-1}$ by $-3$, which should make $F^{-1}F = I$. The reader should check it does. \blacksquare
+\end{book}
+
 \example Let $E = \begin{bmatrix}
 1 & 0 & 0 \\
 0 & 0 & 1 \\
@@ -7185,155 +7125,198 @@ d & e & f \\
 g & h & i
 \end{bmatrix}$.
 \begin{enumerate}[label=(\alph*)]
-\item Multiply $EA$ and $FA$ using theorem \ref{theorem:rows-of-BA}. What do you notice?
+\item Multiply $AE$ and $AF$. What do you notice?
 \item Find $E^{-1}$.
 \end{enumerate}
 
-\begin{book}
-\textbf{Solution.} (a) Write the rows of $E$ as vectors: $\vec{\epsilon}_1 = \bbbvec{1}{0}{0}, \vec{\epsilon}_2=\bbbvec{0}{0}{1}, \vec{\epsilon}_3 = \bbbvec{0}{1}{0}$ so that $E = \bbbvec{\vec{\epsilon}_1^T}{\vec{\epsilon}_2^T}{\vec{\epsilon}_3^T}$. Using theorem \ref{theorem:rows-of-BA}:
-\begin{align*}
-EA = \bbbvec{\vec{\epsilon}_1^TA}{\vec{\epsilon}_2^TA}{\vec{\epsilon}_3^TA} 
-  &= \bbbvec{\begin{bmatrix}
-1 & 0 & 0
-\end{bmatrix}\begin{bmatrix}
-a & b & c \\
-d & e & f \\
-g & h & i
-\end{bmatrix}}{\begin{bmatrix}
-0 & 0 & 1
-\end{bmatrix}\begin{bmatrix}
-a & b & c \\
-d & e & f \\
-g & h & i
-\end{bmatrix}}
-{\begin{bmatrix}
-0 & 1 & 0
-\end{bmatrix}\begin{bmatrix}
-a & b & c \\
-d & e & f \\
-h & h & i
-\end{bmatrix}} \\
-&= \bbbvec{1\begin{bmatrix}
-a & b & c
-\end{bmatrix} + 0\begin{bmatrix}
-d & e & f
-\end{bmatrix} + 0\begin{bmatrix}
-g & h & i
-\end{bmatrix}}{0\begin{bmatrix}
-a & b & c
-\end{bmatrix} + 0\begin{bmatrix}
-d & e & f
-\end{bmatrix} + 1\begin{bmatrix}
-g & h & i
-\end{bmatrix}}{0\begin{bmatrix}
-a & b & c
-\end{bmatrix} + 1\begin{bmatrix}
-d & e & f
-\end{bmatrix} + 0\begin{bmatrix}
-g & h & i
-\end{bmatrix}}
-= \begin{bmatrix}
-a & b & c \\
-g & h & i \\
-d & e & f
-\end{bmatrix}
-\end{align*}
-Notice that $EA$ is the result of swapping rows 2 and 3 of $A$, the same row operation that turns $I$ into $E$. Likewise, using theorem \ref{theorem:rows-of-BA} with $FA$: 
-\begin{align*}
-FA = \bbbvec{\begin{bmatrix}
-1 & -7 & 0
-\end{bmatrix}\begin{bmatrix}
-a & b & c \\
-d & e & f \\
-g & h & i
-\end{bmatrix}}{\begin{bmatrix}
-0 & 1 & 0
-\end{bmatrix}\begin{bmatrix}
-a & b & c \\
-d & e & f \\
-g & h & i
-\end{bmatrix}}
-{\begin{bmatrix}
-0 & 0 & 1
-\end{bmatrix}\begin{bmatrix}
-a & b & c \\
-d & e & f \\
-h & h & i
-\end{bmatrix}} 
-&= \bbbvec{1\begin{bmatrix}
-a & b & c
-\end{bmatrix} + -7\begin{bmatrix}
-d & e & f
-\end{bmatrix} + 0\begin{bmatrix}
-g & h & i
-\end{bmatrix}}{0\begin{bmatrix}
-a & b & c
-\end{bmatrix} + 1\begin{bmatrix}
-d & e & f
-\end{bmatrix} + 0\begin{bmatrix}
-g & h & i
-\end{bmatrix}}{0\begin{bmatrix}
-a & b & c
-\end{bmatrix} + 0\begin{bmatrix}
-d & e & f
-\end{bmatrix} + 1\begin{bmatrix}
-g & h & i
-\end{bmatrix}}\\
-&= \begin{bmatrix}
-a-7d & b-7e & c-7f \\
-d & e & f \\
-g & h & i 
-\end{bmatrix}
-\end{align*}
-Again, notice that $FA$ is the result of adding $-7$ times row 2 of $A$ to row $1$, the same multaddiplacement that turns $I$ to $F$.
+\begin{notes}
+\vfill
+\end{notes}
 
-For (b), we want to make $E^{-1}E = I$, with $E^{-1}$ on the left doing a row operation to $E$. The row operation that should swap rows 2 and 3 back is just the same swap. So $E^{-1} = E$ should work, and the reader should check that $EE = I$. \blacksquare
+\begin{book}
+\textbf{Solution.} Using the definition of matrix by vector multiplication:
+\begin{align*}
+AE &= \begin{bmatrix}
+A \bbbvec{1}{0}{0} & A \bbbvec{0}{0}{1} & A \bbbvec{0}{1}{0} 
+\end{bmatrix} \\
+&= \begin{bmatrix}
+1 \bbbvec{a}{d}{g} + 0 \bbbvec{b}{e}{h} + 0 \bbbvec{c}{f}{i} &
+0 \bbbvec{a}{d}{g} + 0 \bbbvec{b}{e}{h} + 1 \bbbvec{c}{f}{i} &
+0 \bbbvec{a}{d}{g} + 1 \bbbvec{b}{e}{h} + 0 \bbbvec{c}{f}{i} 
+\end{bmatrix} \\
+&= \begin{bmatrix}
+a & c & b \\
+d & f & e \\
+g & i & h
+\end{bmatrix}
+\end{align*}
+Notice that this is the result of swapping columns 2 and 3 of $A$, the same column operation that transforms $I \rightarrow E$. Likewise:
+\begin{align*}
+AF &= \begin{bmatrix}
+A \bbbvec{1}{0}{0} & A \bbbvec{0}{0}{1} & A \bbbvec{0}{1}{0} 
+\end{bmatrix} \\
+&= \begin{bmatrix}
+1 \bbbvec{a}{d}{g} + 0 \bbbvec{b}{e}{h} + 0 \bbbvec{c}{f}{i} &
+-7 \bbbvec{a}{d}{g} + 1 \bbbvec{b}{e}{h} + 0 \bbbvec{c}{f}{i} &
+0 \bbbvec{a}{d}{g} + 0 \bbbvec{b}{e}{h} + 1 \bbbvec{c}{f}{i} 
+\end{bmatrix} \\
+&= \begin{bmatrix}
+a & -7a + b & c \\
+d & -7d + e & f \\
+g & -7g + h & i
+\end{bmatrix}
+\end{align*}
+Notice that this is the result of replacing column $2$ of $A$ with the sum of itself and $-7$ times column $1$, the same column operation that transformed $I \rightarrow F$.
+(b) To find $E^{-1}$, notice that $E$ can be transformed back to the identity by swapping columns 2 and 3 again. So to make $EE^{-1}$ do that column operation to $E$, we should make $E^{-1}$ the result of doing that operation to $I$:
+\[E^{-1} =  \begin{bmatrix}
+1 & 0 & 0 \\
+0 & 0 & 1 \\
+0 & 1 & 0 
+\end{bmatrix}\]
+The reader should check that indeed $EE^{-1}=I$. Also, since $E = E^{-1}$, this also shows that $E^{-1}E = I$. \blacksquare
 \end{book}
 
+\textbf{Note:} The above examples should convince you that every elementary matrix $E$ has an inverse, which is defined by the inverse column operation of the one that was done to $I$ to make $E$.
+
+The above examples also justify the following theorem. They're not formal proof, but there's nothing special about the particular column operations in the examples, and the concept works the same way in general.
+
+\begin{theorem}[Elementary matrices do column operations.] \label{theorem:elementary-column-operations}
+
+If $A$ is any $r\times c$ matrix, and $E$ is an $c\times c$ elementary matrix that is the result of doing some row operation to $I$, then $AE$ is the result of doing the same column operation to $A$.
+\end{theorem}
+
 \begin{notes}
-\vfill \hspace{2pt}
 \columnbreak
 \end{notes}
 
-\textbf{Note:} The above examples should convince you that every elementary matrix $E$ has an inverse, which is defined by the inverse row operation of the one that was done to $I$ to make $E$.
+\begin{book}
+\textbf{Proof.} The examples above are a good way to convince yourself that this is true. If you're not convinced, maybe try similar examples with some $4\times 4$ elementary matrices. If you're still not convinced, here's a general proof.
 
-The above examples also justify the following theorem. They're not formal proof, but there's nothing special about the particular row operations in the examples, and the concept works the same way in general.
+First, label the columns: $A = \begin{bmatrix}
+\vec{a}_1 & \cdots & \vec{a}_c
+\end{bmatrix}, I_c = \begin{bmatrix}
+\vec{e}_1 & \cdots & \vec{e}_c
+\end{bmatrix}$ and $E = \begin{bmatrix}
+\vec{\epsilon}_1 & \cdots & \vec{\epsilon}_c
+\end{bmatrix}$. Let TCO be The Column Operation that turns $I$ to $E$.
+
+Now, if column $i$ is unaffected by TCO, then column $i$ of $E$ is still $\vec{e}_i=\vec{\epsilon}_i$. And by definition of matrix by vector multiplication, column $i$ of $AE$ is $A\vec{e}_i =\vec{a}_i$. Thus the rows of $A$ that should be unchanged by TCO are indeed unchanged. What about the rows that were changed? We need to show that these columns of $E$ make the corresponding columns of $AE$ equal to the correct linear combination of the columns of $A$.
+
+If TCO is scaling a column by $k$, then there's a single column $\vec{\epsilon}_i = (0,\ldots,0,k,0,\ldots,0)$ with $k$ in the $i^{\text{th}}$ entry, and column $i$ of $AE$ is 
+\[A\vec{\epsilon}_i = \vec{0}+ \cdots + \vec{0} + k\vec{a}_i+ \vec{0} + \cdots + \vec{0} = k\vec{a}_i\]
+as desired.
+
+If TCO is a swap, then there are two columns of $E$ of the form $\vec{\epsilon}_i=\vec{e}_j$ and $\vec{\epsilon}_j=\vec{e}_i$. This column $i$ of $AE$ equal to $A\vec{\epsilon}_i = A \vec{e}_j = \vec{a}_j$, and vice versa, as desired.
+
+If TCO is a multaddiplacement, then there is a column of $E$ of the form $\vec{\epsilon}_i=\vec{e}_i+k\vec{e}_j$, and so column $i$ of $AE$ is
+\[A\vec{\epsilon}_i= A(\vec{e}_i+k\vec{e}_j) = A\vec{e}_i+kA\vec{e}_j = \vec{a}_i+k\vec{a}_j\]
+as desired. \blacksquare
+\end{book}
 
 \begin{theorem}[Elementary matrices do row operations.]\label{theorem:elementary-operations}
 
 If $A$ is any $r\times c$ matrix, and $E$ is an $r\times r$ elementary matrix that is the result of doing some row operation to $I$, then $EA$ is the result of doing the same operation to $A$.
 \end{theorem}
 
+\begin{notes}
+\columnbreak
+\end{notes}
+
 \begin{book}
-\textbf{Proof.} The examples above are a good way to convince yourself this is true. If you're not convinced, maybe try similar examples with some $4x4$ elementary matrices. If you're still not convinced, here's a general proof.
-
-First some notation. Notice that the rows of an identity matrix are equal to its columns, so we can write $I_r = \bbbvec{\vec{e}_1^T}{\vdots}{\vec{e}_r}$. And we'll write the rows of $E$ as column vectors $\vec{\epsilon}_1, \ldots, \vec{\epsilon}_r$, so that $E = \bbbvec{\vec{\epsilon}_1^T}{\vdots}{\vec{\epsilon}_r^T}$. Also, we'll refer to the row operation that turns $I$ into $E$ as simply ``the operation.''  
-
-Now, if row $i$ is unaffected by the operation, then row $i$ in $E$ is still $\vec{\epsilon}_i^T=\vec{e}_i^T$. And by theorem \ref{theorem:rows-of-BA} (rows of BA), row $i$ of $EA$ is $\vec{e}_i^TA$ which is a linear combination of the rows of $A$ using $\vec{e}_i=(0,\ldots, 0, 1, 0, \ldots, 0)$ as weights:
-\[\text{row }i\text{ of } EA = \vec{e}_i^TA = \text{row }i\text{ of }A\]
-Thus the rows of $A$ that should be unchanged by the operation are indeed unchanged. What about the rows of $E$ that were changed by the operation? The gist is that these rows of $E$ make the corresponding rows of $EA$ equal to the correct linear combination of the rows of $A$. Let's check the three different types of row operations:
-
-If the operation is scaling a row by $k$, then there's a single row $\vec{\epsilon}_i^T = \begin{bmatrix}
-0 & \cdots & 0 & k & 0 & \cdots & 0
-\end{bmatrix}$ with the $k$ in the $i^{\textrm{th}}$ entry. Using theorem \ref{theorem:rows-of-BA} again,
-\[\text{row }i \text{ of } EA =  \vec{\epsilon}_i^TA = \begin{bmatrix}
-0 & \cdots & 0 & k & 0 & \cdots & 0
-\end{bmatrix}A = k(\text{row } i \text{ of } A),\]
-as desired.
-
-If the operation is a swap, then there are two rows of $E$ of the form $\vec{\epsilon}^T_i=\vec{e}^T_j$ and $\vec{\epsilon}_j^T= \vec{e}^T_i$. Using theorem \ref{theorem:rows-of-BA} again,
-\[ \text{row }i \text{ of } EA =  \vec{\epsilon}_i^TA = \vec{e}_j^TA = \text{row }j \text{ of } A\]
-and 
-\[ \text{row }j \text{ of } EA =  \vec{\epsilon}_j^TA = \vec{e}_e^TA = \text{row }i \text{ of } A\]
-which means the corresponding two rows of $EA$ are also the swapped rows of $A$ as desired.
-
-If the operation is multaddiplacement, there's a row $i$ of $E$ that can be written $\vec{\epsilon}_i^T = \vec{e}_i^T + k\vec{e}_j^T$. Using theorem \ref{theorem:rows-of-BA} one final time,
-\[ \text{row }i \text{ of } EA =  \vec{\epsilon}_i^TA = (\vec{e}_i^T + k\vec{e}_j^T)A =
-\vec{e}_i^TA + k(\vec{e}_j^TA) = \text{row }i \text{ of} A + k ( \text{row }j\text{ of }A )\]
-as desired. \blacksquare
+\textbf{Proof.} Since the columns of $E^T$ are the rows of $E$, the row operation that turns $I$ into $E$ is equivalent to the column operation that turns $I^T = I$  into $E^T$. For example, if the $I \rightarrow E$ operation is the row multaddiplacement $r_3\leftarrow r_3-4r_1$, then the equivalent column operation is $c_3\leftarrow c_3-4c_1$, reflected in $E^T$. So $A^TE^T$ is the result of applying that operation to the columns of $A^T$ (which are rows of $A$), and thus $EA = (A^TE^T)^T$ is the result of applying that operation to the rows of $A$. \blacksquare
 \end{book}
 
-The next theorem combines a bunch of things we already know with one new fact to prove. Combined, it's a powerful and easy-to-use tool.
+The above proof might not feel very satisfying. The example below should make it feel a little more concrete.
+
+\example Let $E = \begin{bmatrix}
+1 & 0 & 0 \\
+0 & 0 & 1 \\
+0 & 1 & 0 
+\end{bmatrix}$, $F = \begin{bmatrix}
+1 & -7 & 0 \\
+0 & 1 & 0 \\
+0 & 0 & 1
+\end{bmatrix}$, and $A = \begin{bmatrix}
+a & b & c \\
+d & e & f \\
+g & h & i
+\end{bmatrix}$. Multiply $EA$ and $FA$. Notice that each row of $EA$ and $FA$ is linear combinations of the rows of $A$ using the entries from the corresponding entry of the matrix on the left as weights.
+
+\begin{notes}
+\vfill
+\columnbreak
+\end{notes}
+
+\begin{book}
+\textbf{Solution.} Using the row-column rule to calculate $EA$, and then rearranging some terms, gives:
+\begin{align*}
+&\begin{bmatrix}
+1 & 0 & 0 \\
+0 & 0 & 1 \\
+0 & 1 & 0 
+\end{bmatrix}\begin{bmatrix}
+a & b & c \\
+d & e & f \\
+g & h & i
+\end{bmatrix} \\
+= &\begin{bmatrix}
+1a + 0d + 0g & 1b + 0e + 0h & 1c + 0f + 0i \\
+0a + 0d + 1g & 0b + 0e + 1h & 0c + 0f + 1i \\
+0a + 1d + 0g & 0b + 1e + 0h & 0c + 1f + 0i 
+\end{bmatrix} \\
+= &\begin{bmatrix}
+1 \begin{bmatrix}a & b & c\end{bmatrix} + 0 \begin{bmatrix}d & e & f\end{bmatrix} + 0\begin{bmatrix}
+g & h & i
+\end{bmatrix} \\
+0 \begin{bmatrix}a & b & c\end{bmatrix} + 0 \begin{bmatrix}d & e & f\end{bmatrix} + 1\begin{bmatrix}
+g & h & i
+\end{bmatrix} \\
+0 \begin{bmatrix}a & b & c\end{bmatrix} + 1 \begin{bmatrix}d & e & f\end{bmatrix} + 0\begin{bmatrix}
+g & h & i
+\end{bmatrix} \\
+\end{bmatrix} \\
+= &
+\begin{bmatrix}
+a & b & c \\
+g & h & i \\
+d & e & f
+\end{bmatrix}
+\end{align*}
+This is indeed the result of swapping rows 2 and 3 of $A$. Likewise we can calculate $FA$:
+\begin{align*}
+&\begin{bmatrix}
+1 & -7 & 0 \\
+0 & 1 & 0 \\
+0 & 0 & 1 
+\end{bmatrix}\begin{bmatrix}
+a & b & c \\
+d & e & f \\
+g & h & i
+\end{bmatrix} \\
+= &\begin{bmatrix}
+1a  -7d + 0g & 1b -7e + 0h & 1c -7f + 0i \\
+0a + 1d + 0g & 0b + 1e + 0h & 0c + 1f + 0i \\
+0a + 0d + 1g & 0b + 0e + 1h & 0c + 0f + 1i 
+\end{bmatrix} \\
+= &\begin{bmatrix}
+1 \begin{bmatrix}a & b & c\end{bmatrix} -7 \begin{bmatrix}d & e & f\end{bmatrix} + 0\begin{bmatrix}
+g & h & i
+\end{bmatrix} \\
+0 \begin{bmatrix}a & b & c\end{bmatrix} + 1 \begin{bmatrix}d & e & f\end{bmatrix} + 0\begin{bmatrix}
+g & h & i
+\end{bmatrix} \\
+0 \begin{bmatrix}a & b & c\end{bmatrix} + 0 \begin{bmatrix}d & e & f\end{bmatrix} + 1\begin{bmatrix}
+g & h & i
+\end{bmatrix} \\
+\end{bmatrix} \\
+= &
+\begin{bmatrix}
+a -7d & b - 7e & c -7f \\
+d & e & f \\
+g & h & i 
+\end{bmatrix}\blacksquare
+\end{align*}
+\end{book}
 
 \begin{theorem}[Invertible Matrix Theorem (IMT).]
 \label{theorem:IMT}
@@ -7351,11 +7334,6 @@ Suppose $A$ is a $c\times c$ matrix. Then the following are equivalent:
 \item $\col A = \R^c $
 \end{enumerate}
 \end{theorem}
-
-\begin{notes}
-\columnbreak
-\end{notes}
-\textbf{Proof.} 
 
 \begin{center}
 \begin{tikzpicture}[
@@ -7386,8 +7364,13 @@ doublearrow/.style={<->, >=Stealth, thick}]
 \end{tikzpicture}
 \end{center}
 
+\begin{notes}
+
+\vfill \hspace{1pt}
+\columnbreak
+\end{notes}
+\begin{book}\textbf{Proof.} 
 In the graph, a black arrow indicates an implication that we either already know, or is easy to prove. The red arrow indicates the implication we need to prove. Notice that if you know that any one of the parts is true, you can follow arrows that imply any other part is true.
-\begin{book}
 For example, if $\col A = \R^c$, part (ix), is true, that implies (viii) which implies (v) which implies (i) which implies (iii). Likewise if you know that (iii) is false, then (ix) can't be true because (ix) implies (iii). The same goes for any other pair of parts.
 
 Let's prove the easy ones first.
@@ -7453,23 +7436,57 @@ which says the same sequence of row operations that reduce $A$ to $I$ also reduc
 
 \exatend (T/F?) If $E$ is an elementary matrix, then $AE$ is the result of applying the same row operation to $A$ that transformed $I$ to $E$.
  
+\exatend If $E = \begin{bmatrix}
+1 & 0 & 0 & 0 \\
+0 & 1 & 0 & k \\
+0 & 0 & 1 & 0 \\
+0 & 0 & 0 & 1 
+\end{bmatrix}$, find $E^{-1}$, and check by multiplying $EE^{-1}$ and $E^{-1}E$.
+
+\exatend If $F = \begin{bmatrix}
+0 & 0 & 1 & 0 \\
+0 & 1 & 0 & 0 \\
+1 & 0 & 0 & 0 \\
+0 & 0 & 0 & 1 
+\end{bmatrix}$, find $F^{-1}$, and check by multiplying $FF^{-1}$. Why does this also show that $F^{-1}F$.
+
 %doesn't use 2.4 but that's ok
 \exatend Suppose $A = \begin{bmatrix}
 a & b \\
 c & d
 \end{bmatrix}$, is invertible and let $\mathcal{A} = ( \vec{a}_1, \vec{a}_2 )$ be the basis of $\R^2$ made by the columns of $A$. 
 \begin{enumerate}[label=(\alph*)]
-\item Find $\left[ \vec{e}_1 \right]_{\mathcal{A}}$ and $\left[ \vec{e}_2 \right]_{\mathcal{A}}$.
 \item Let $\mathcal{E} = ( \vec{e}_1,\vec{e}_2 )$. Find $\left[ \vec{a}_1 \right]_{\mathcal{E}}$ and $\left[ \vec{a}_2 \right]_{\mathcal{E}}$.
+\item Find $\left[ \vec{e}_1 \right]_{\mathcal{A}}$ and $\left[ \vec{e}_2 \right]_{\mathcal{A}}$.
 \end{enumerate}
 
-\exatend If $A = \begin{bmatrix}
+\exatend Let $A = \begin{bmatrix}
+a & b & c \\
+d & e & f \\
+g & h & i
+\end{bmatrix}$, and $AF = \begin{bmatrix}
+c & b & a \\
+f & e & d \\
+i & h & g
+\end{bmatrix}$.
+\begin{enumerate}[label=(\alph*)]
+\item Find $F$.
+\item Find $F^{-1}$.
+\item Find $FA$.
+\end{enumerate}
+
+\exatend Let $A = \begin{bmatrix}
 a & b \\
 c & d
 \end{bmatrix}$ and $EA = \begin{bmatrix}
 a & b \\
 c-2a & d-2b
-\end{bmatrix}$, find $E$.
+\end{bmatrix}$.
+\begin{enumerate}[label=(\alph*)]
+\item Find $E$.
+\item Find $E^{-1}$.
+\item Find $AE$.
+\end{enumerate}
 
 \exatend Let $A = \begin{bmatrix}
 1 & 2 & 0 \\
@@ -7503,19 +7520,7 @@ c-2a & d-2b
 %credit: david austin
 \exatend Suppose that $A^{3} = AAA$ is invertible, and $(A^3)^{-1}=B$. Show that $A$ is invertible and find $A^{-1}$. \creditfootnote{Inspired by Austin.}
 
-\exatend Let $E = \begin{bmatrix}
-1 & 0 & 0 \\
-0 & 0 & 1 \\
-0 & 1 & 0 
-\end{bmatrix}, F = \begin{bmatrix}
-1 & -7 & 0 \\
-0 & 1 & 0 \\
-0 & 0 & 1
-\end{bmatrix}$, and $A = \begin{bmatrix}
-a & b & c \\
-d & e & f \\
-g & h & i
-\end{bmatrix}$. Note that you can think of $E$ as the result of adding -7 times \emph{column} 1 of $I$ to \emph{column} 2 of $I$. Likewise $F$ as the result of swapping \emph{columns} 2 and 3. Multiply to find $AE$ and $AF$. (Note that the result is like applying the same column operation to $A$; this is true in general.)
+\exatend Let $E$ be a $c \times c$ elementary matrix that is the result of swapping columns $i$ and $j$ of $I$. Explain why $E = E^T$. \hintfootnote{Denote $e_{pq}$ to be the entry in row $p$, column $q$ of $E$. What are the values of $e_{ii}, e_{jj}, e_{ij},$ and $e_{ji}$?}
 
 % doesn't use 2.4 but good review.
 \exatend Suppose $T:\R^2\rightarrow\R^2$ is a linear transformation such that $T(-3,5) = (4,2)$ and $T(1,-2) = (0,3)$. Find $A$ such that $T(\vec{x}) = A\vec{x}$ using the following steps:
@@ -8733,7 +8738,7 @@ c & d
 0 & 0 & 1
 \end{bmatrix}$. 
 \begin{enumerate}[label=(\alph*)]
-\item Find $AE$. What do you notice?
+\item Find $AE$. Does your result agree with theorem \ref{theorem:elementary-column-operations} (elementary matrices do column operations)?
 \item Find $\det(A), \det(E)$, and $\det(AE)$. What do you notice?
 \end{enumerate}
 
@@ -8752,9 +8757,9 @@ c & e & f
 1 & 0 & 0 \\
 0 & 1 & 0 \\
 0 & \frac{-e}{f} & 1
-\end{bmatrix}$. Note that $E$ is an elementary matrix, the result of doing the row operation $r_3\leftarrow r_3+\frac{-e}{f}r_2$ to $I$; and $E$ is also the result of doing the \emph{column} operation $c_2\leftarrow c_2+\frac{-e}{f}c_3$. 
+\end{bmatrix}$.
 \begin{enumerate}[label=(\alph*)]
-\item Find $AE$. What do you notice?
+\item Find $AE$. Does your answer agree with theorem \ref{theorem:elementary-column-operations}?
 \item Find $\det(A), \det(E)$, and $\det(AE)$. What do you notice?
 \end{enumerate}
 
@@ -8762,6 +8767,7 @@ c & e & f
 \vfill \hspace{1pt}
 \columnbreak
 \end{notes}
+
 \begin{book}
 \textbf{Solution.} Using the definition of matrix multiplication:
 \[AE=\begin{bmatrix}
@@ -8775,27 +8781,9 @@ a & 0 & 0 \\
 b & d & 0 \\
 c & 0 & f
 \end{bmatrix}\]
-Notice that $AE$ is the result of doing the same column operation to $A$, that was done to get $E$ from $I$.
+This agrees with theorem \ref{theorem:elementary-column-operations}: $AE$ is the result of doing the same column operation to $A$, that was done to get $E$ from $I$.
 
 Since $A,E$ and $AE$ are (lower) triangular, $\det(A) = adf$, $\det(E) = 1^3=1$, and $\det(AE) = adf$. Notice that $\det(AE) = \det(A)\det(E)$.
-\end{book}
-
-\begin{lemma}\label{theorem:lemma-column-operation}
- If $A$ is any $r\times c$ matrix, and $E$ is an $c\times c$ elementary matrix that is the result of doing some \emph{column} operation to $I$, then $AE$ is the result of doing the same \emph{column} operation to $A$.
-\end{lemma}
-
-Note that this lemma is the same as theorem \ref{theorem:elementary-operations}, but about $AE$ instead of $EA$, and column instead of row operations.
-
-\begin{notes}
-\vfill
-\end{notes}
-\begin{book}
-\textbf{Proof.} Note that:
-\begin{equation}
-\label{eq:3.1-lemma-proof}
-AE = (E^TA^T)^T
-\end{equation}
-Since the rows of $E^T$ are the columns of $E$, the column operation that turns $I$ into $E$ is equivalent to the row operation that turns $I^T = I$  into $E^T$. For example, if the $I \rightarrow E$ operation is the multaddiplacement $c_3\leftarrow c_3-4c_1$, then the equivalent row operation is $r_3\leftarrow r_3-4r_1$, reflected in $E^T$. So $E^TA^T$ is the result of applying that operation to the rows of $A^T$, which are columns of $A$, and thus $(E^TA^T)^T$ is the result of applying that operation to the columns of $A$. \blacksquare
 \end{book}
 
 \begin{lemma}
@@ -8805,24 +8793,47 @@ If $A$ is square and $E$ is elementary (of the same size) then: \[\det(AE) = \de
 \end{lemma}
 
 \begin{notes}
-\vfill \hspace{2pt}
-\columnbreak
+\vfill 
 \end{notes}
+
 \begin{book}
-\textbf{Proof.} Let's refer to the column operation that turns $I$ to $E$ as ``the operation.'' So, by lemma \ref{theorem:lemma-column-operation}, $AE$ is the result of applying the operation to $A$. And $\det(AE)$ is $\det(A)$ multiplied by a factor of either $-1$, if the operation is a swap, or a scalar, if the operation is scaling, or a factor of $1$ (no change), if the operation is multaddiplacement. That factor equals $\det(E)$ since that same operation changed $\det(I)=1$ to $\det(E)$. \blacksquare
+\textbf{Proof.} Let's refer to the column operation that turns $I$ to $E$ as ``the operation.'' So, by lemma \ref{theorem:elementary-column-operations}, $AE$ is the result of applying the operation to $A$. And $\det(AE)$ is $\det(A)$ multiplied by a factor of either $-1$, if the operation is a swap, or a scalar, if the operation is scaling, or a factor of $1$ (no change), if the operation is multaddiplacement. That factor equals $\det(E)$ since that same operation changed $\det(I)=1$ to $\det(E)$. \blacksquare
 \end{book}
 
-The next theorem should be surprising, because the vectors that make $\pgram A^T$ are very different from the vectors that make $\pgram A$.
+\begin{theorem}
+\label{theorem:detAB-detAdetB}
+
+If $A$ and $B$ are $c\times c$ matrices, then $\det(AB) = \det(A)\det(B)$.
+\end{theorem}
+
+\begin{notes}
+\vfill \hspace{1pt}
+\columnbreak
+\end{notes}
+
+\begin{book}
+\textbf{Proof.} If $B$ is not invertible, then exercise \ref{exercise:2.4-ABinv-Ainv} in section \ref{sec:elementary-matrices-and-IMT} implies $AB$ is not invertible, which makes both sides of the equation zero. So we can assume $B$ is invertible. Then by the IMT, $B$ is row-equivalent to $I$. Row-operations are reversible, so there's a sequence of row operations that transform $I$ to $B$, and each of these row operations has a corresponding elementary matrix that does the operation when multiplied by $I$ on the left:
+\[ B =E_n\cdots E_2E_1I = E_n\cdots E_2E_1 \]
+Plugging this in for $B$:% and applying lemma \ref{theorem:lemma-dAE-dAdE} repeatedly in each step:
+\begin{align*}
+ \det(AB) &= \det(AE_n\cdots E_2E_1) \\
+&= \det(A)\det(E_n)\cdots\det(E_2)\det(E_1) & (\text{lemma \ref{theorem:lemma-dAE-dAdE}, }n\text{ times}) \\
+&= \det(A)\det(E_n \cdots E_2E_1) & (\text{lemma \ref{theorem:lemma-dAE-dAdE}, }n-1\text{ times}) \\
+&= \det(A)\det(B)
+\end{align*}
+\blacksquare
+\end{book}
 
 \begin{theorem}
 \label{theorem:detA-detAT} If $A$ is square, then $\det(A) = \det(A^T)$.
 \end{theorem}
 
 \begin{notes}
-\vfill
+\vfill \hspace{1pt}
+\columnbreak
 \end{notes}
 \begin{book}
-\textbf{Proof.} If $A$ is not invertible, then neither is $A^T$, and $\det(A) = 0 = \det(A^T)$. So we just need to prove it for invertible matrices. Assume $A$ is invertible. Then by the IMT, $A$ is row-equivalent to $I$. Row-operations are reversible, so there's a sequence of row operations that transform $I$ to $A$, and each of these row operations has a corresponding elementary matrix that does the operation when multiplied by $I$ on the left:
+\textbf{Proof.} If $A$ is not invertible, then neither is $A^T$, and $\det(A) = 0 = \det(A^T)$. So we just need to prove it for invertible matrices. Assume $A$ is invertible. Then by the IMT, $A$ is row-equivalent to $I$. Row-operations are reversible, so there's a sequence of row operations that transform $I$ to $A$, and each of these row operations has a corresponding elementary matrix that does the row operation when multiplied by $I$ on the left:
 \[ A =E_n\cdots E_2E_1I = E_n\cdots E_2E_1 \] 
 Taking the determinant and applying lemma \ref{theorem:lemma-dAE-dAdE} $n$ times gives:
 \begin{equation}\label{eq:3.1-product-of-elem}
@@ -8843,30 +8854,6 @@ Now, to show equations \ref{eq:3.1-product-of-elem} and \ref{eq:3.1-product-of-E
 \end{itemize}
 \blacksquare
 \end{book}
-
-\begin{theorem}
-\label{theorem:detAB-detAdetB}
-
-If $A$ and $B$ are $c\times c$ matrices, then $\det(AB) = \det(A)\det(B)$.
-\end{theorem}
-
-\begin{notes}
-\vfill \hspace{1pt}
-\columnbreak
-\end{notes}
-\begin{book}
-\textbf{Proof.} If $B$ is not invertible, then exercise \ref{exercise:2.4-ABinv-Ainv} in section \ref{sec:elementary-matrices-and-IMT} implies $AB$ is not invertible, which makes both sides of the equation zero. So we can assume $B$ is invertible. Then by the IMT, $B$ is row-equivalent to $I$. Row-operations are reversible, so there's a sequence of row operations that transform $I$ to $B$, and each of these row operations has a corresponding elementary matrix that does the operation when multiplied by $I$ on the left:
-\[ B =E_n\cdots E_2E_1I = E_n\cdots E_2E_1 \]
-Plugging this in for $B$:% and applying lemma \ref{theorem:lemma-dAE-dAdE} repeatedly in each step:
-\begin{align*}
- \det(AB) &= \det(AE_n\cdots E_2E_1) \\
-&= \det(A)\det(E_n)\cdots\det(E_2)\det(E_1) & (\text{lemma \ref{theorem:lemma-dAE-dAdE}, }n\text{ times}) \\
-&= \det(A)\det(E_n \cdots E_2E_1) & (\text{lemma \ref{theorem:lemma-dAE-dAdE}, }n-1\text{ times}) \\
-&= \det(A)\det(B)
-\end{align*}
-\blacksquare
-\end{book}
-
 
 \textbf{Remarks: Existence and Uniqueness of Determinant}
 
