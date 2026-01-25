@@ -613,13 +613,13 @@ Multaddiplacement requires some explaining. Call the first system $S$ and the tr
             & \vdots
       \end{aligned}\right. \]
 
-Suppose that $(s_1,\ldots,s_n)$ is a solution of $S$. This means when $(s_1,\ldots,s_n)$ is plugged in to the variables,
+Suppose that $(s_1,\ldots,s_c)$ is a solution of $S$. This means when $(s_1,\ldots,s_c)$ is plugged in to the variables,
 
 \[L_1\text{ is the same number as }R_1 \text{, and}\]
 \[L_2\text{ is the same number as }R_2.\] So you're really just adding the same number to both sides of equation 2:
-  \[L_2 + k(L_1)\text{ is the same number as }R_2 + k(R_1).\] Thus $(s_1,\ldots,s_n)$ is also solution of $T$.
+  \[L_2 + k(L_1)\text{ is the same number as }R_2 + k(R_1).\] Thus $(s_1,\ldots,s_c)$ is also solution of $T$.
 
-Now suppose that $(t_1,\ldots,t_n)$ is a solution of $T$. This means that when $(t_1,\ldots,t_n)$ is plugged in,
+Now suppose that $(t_1,\ldots,t_c)$ is a solution of $T$. This means that when $(t_1,\ldots,t_c)$ is plugged in,
   \[L_1\text{ is the same number as }R_1\text{ and}\]
   \[L_2 + k(L_1)\text{ is the same number as }R_2 + k(R_1).\]
 And this also means that
@@ -627,7 +627,7 @@ And this also means that
 and you can add it to both sides of equation 2:
   \[L_2+k(L_1) - k(L_1)\text{ is the same number as  }R_2+k(R_1) - k(R_1),\]
 which means
-  \[L_2\text{ is the same number as }R_2.\] Thus $(t_1,\ldots,t_n)$ is also a solution of $S.$
+  \[L_2\text{ is the same number as }R_2.\] Thus $(t_1,\ldots,t_c)$ is also a solution of $S.$
 
 Putting it together, any solution of $S$ is also a solution of $T$ and any solution of $T$ is also a solution of $S$, which means they have the same solution set. \blacksquare
 \end{book}
@@ -1243,7 +1243,7 @@ x_3&=3
 \end{notes}
 
 \begin{definition}
-Variables which correspond to pivot columns are called \textbf{basic variables}. Any non-basic variables are called \textbf{free variables}. When you solve for the basic variables in terms of the free variables, you have a \emph{parametric} description of the solution set. Any choice of the free variables determines a different solution.
+Variables which correspond to pivot columns are called \textbf{basic variables}. Any non-basic variables are called \textbf{free variables}. When you solve for all the variables in terms of the free variables, you have a \emph{parametric} description of the solution set. Any choice of the free variables determines a different solution.
 \end{definition}
 
 \example Reduce the following augmented matrix for a system to reduced row echelon form, and describe the solution set.
@@ -1637,7 +1637,7 @@ Let's prove (i) and leave some others for exercises.
 
 \end{book}
 
-\begin{definition} A \textbf{list} of vectors is a finite set of vectors, that all have the same number of entries, written in some order. Sometimes we'll write a list with parentheses, sometimes without. So $\vec{a}_{1}, \vec{a}_2, \vec{a}_3$ means the same thing as $(\vec{a}_{1}, \vec{a}_2, \vec{a}_c)$ but not the same thing as $\vec{a}_3,\vec{a}_2,\vec{a}_1$.
+\begin{definition} A \textbf{list} of vectors is a finite set of vectors, that all have the same number of entries, written in some order. Sometimes we'll write a list with parentheses, sometimes without. So $\vec{a}_{1}, \vec{a}_2, \vec{a}_3$ means the same thing as $(\vec{a}_{1}, \vec{a}_2, \vec{a}_3)$ but not the same thing as $\vec{a}_3,\vec{a}_2,\vec{a}_1$.
 
 If $\vec{a}_1,\vec{a}_2, \ldots, \vec{a}_c$ is a list of vectors in $\R^n$ and $x_{1}, x_2, \ldots, x_c$ are in $\R$, then 
 \[ x_1\vec{a}_1 + x_2\vec{a}_2 + \cdots + x_c\vec{a}_c\]
@@ -1926,7 +1926,7 @@ So the original vector equation $x_1\vec{u}+x_2\vec{v}= \vec{0}$ is equivalent t
 \begin{notes}
 \vspace{12em}
 \end{notes}
-\item For what value(s) of $k$ is $\vec{y}=\bbbvec{h}{2}{4}$ in $\spn( \vec{u},\vec{v} )$?
+\item For what value(s) of $h$ is $\vec{y}=\bbbvec{h}{2}{4}$ in $\spn( \vec{u},\vec{v} )$?
 \begin{notes}
 \vspace{12em}
 \end{notes}
@@ -1998,6 +1998,9 @@ x_1=0 \\ x_2=0
 \end{aligned}$ which has only one solution. You could also cite theorem \ref{theorem:existence-and-uniqueness-basics} since there are no free variables: there's a pivot position in each of the $x_1$ and $x_2$ columns. \blacksquare
 \end{book}
 
+\begin{notes}
+\columnbreak
+\end{notes}
 
 \exerciseheading
 
@@ -2712,7 +2715,8 @@ A & \vec{y}
 \end{book}
 
 \begin{notes}
-\vfill
+\vfill 
+\columnbreak
 \end{notes}
 
 \begin{theorem}[The uniqueness theorem.]
@@ -2738,9 +2742,13 @@ A & \vec{0}
 
 Now suppose that $\vec{a}_1, \ldots, \vec{a}_c$ are a linearly independent list of vectors; that is, the homogeneous equation with augmented matrix $\begin{bmatrix}[c|c]
 A & \vec{0}
-\end{bmatrix}$ and coefficient matrix $A$ has only one solution. By theorem  \ref{theorem:existence-and-uniqueness-basics} part (ii), $A$ cannot have non-pivot columns, because if it did, there would be an infinite number of solutions.
+\end{bmatrix}$ and coefficient matrix $A$ has only one solution. By theorem  \ref{theorem:existence-and-uniqueness-basics} part (ii), $A$ cannot have non-pivot columns, because if it did, there would be an infinite number of solutions. \blacksquare
 \end{book}
 
+\begin{notes}
+\vfill
+\vfill
+\end{notes}
 
 \begin{theorem}
 \label{theorem:more-vectors-than-entries-dependent}
@@ -2751,11 +2759,12 @@ If a list of vectors has more vectors than there are entries in the vectors, the
 \textbf{Proof.} Suppose we have $c$ vectors, $\vec{a}_1,\ldots,\vec{a}_c$, in $\R^r$, with $c>r$. Then the matrix $A =
 \begin{bmatrix}
 \vec{a}_1 & \cdots & \vec{a}_c
-\end{bmatrix}$ has more columns then rows. Since you can't have more than one pivot per row, there must be at least one non-pivot column in $A$, which corresponds to a free variable in $x_1\vec{a}_1 + \cdots + x_c\vec{a}_c= \vec{0}$. The free variable implies an infinite number of solutions by theorem \ref{theorem:existence-and-uniqueness-basics}.
+\end{bmatrix}$ has more columns then rows. Since you can't have more than one pivot per row, there must be at least one non-pivot column in $A$, which corresponds to a free variable in $x_1\vec{a}_1 + \cdots + x_c\vec{a}_c= \vec{0}$. The free variable implies an infinite number of solutions by theorem \ref{theorem:existence-and-uniqueness-basics}. \blacksquare
 \end{book}
 
 \begin{notes}
 \vfill \hspace{2pt}
+\columnbreak
 \end{notes}
 
 \exerciseheading
@@ -3372,11 +3381,11 @@ If $W$ is a subspace of $\R^n$, then $W=\spn (\vec{v}_1,\ldots, \vec{v}_c)$ for 
 \begin{book}
 \textbf{Proof.} Let $W$ be a subspace of $\R^n$. The following multi-step process shows how $\vec{v}_1,\ldots,\vec{v}_c$ can be constructed.
 
-\textbf{Step 0.} If $W = \left\{\vec{0}\right\}$, then $W = \spn(\vec{0})$ and we're done. Otherwise, there exists some non-zero vector in $W$; call it $\vec{v}_1$.
+\textbf{Step 0.} If $W = \left\{\vec{0}\right\}$, then $W = \spn()$ and we're done. Otherwise, there exists some non-zero vector in $W$; call it $\vec{v}_1$.
 
 \textbf{Step 1.} The list $\vec{v}_1$ of a single nonzero vector is linearly independent. Since $W$ is closed under scalar multiplication, we know $\spn ( \vec{v}_1 )$ is a subset of $W$. If $W = \spn ( \vec{v}_1 )$, we're done. Otherwise, there exists some vector $\vec{v}_2$ in $W$ but not in $\spn ( \vec{v}_1 )$.
 
-\textbf{Step 2.} The list $\vec{v}_1,\vec{v}_2$ is linearly independent by theorem \ref{theorem:one-vector-is-independent}, since $\vec{v}_1 \ne \vec{0}$ and $\vec{v}_2$ is not a scalar multiple of $\vec{v}_1$.  Since $W$ is closed under scalar multiplication and vector addition, we know $\spn ( \vec{v}_1, \vec{v}_2 )$ is a subset of $W$. If $W = \spn ( \vec{v}_1, \vec{v}_2 )$, we're done. Otherwise, there exists some vector $\vec{v}_3$ in $W$ but not in $\spn ( \vec{v}_1, \vec{v}_2 )$.
+\textbf{Step 2.} The list $\vec{v}_1,\vec{v}_2$ is linearly independent by theorem \ref{theorem:characterization-of-linear-dependence}, since $\vec{v}_1 \ne \vec{0}$ and $\vec{v}_2$ is not a scalar multiple of $\vec{v}_1$.  Since $W$ is closed under scalar multiplication and vector addition, we know $\spn ( \vec{v}_1, \vec{v}_2 )$ is a subset of $W$. If $W = \spn ( \vec{v}_1, \vec{v}_2 )$, we're done. Otherwise, there exists some vector $\vec{v}_3$ in $W$ but not in $\spn ( \vec{v}_1, \vec{v}_2 )$.
 \[\vdots\]
 \textbf{Step $i$.} The list $\vec{v}_1,\vec{v}_2, \ldots, \vec{v}_i$ is linearly independent by theorem \ref{theorem:one-vector-is-independent}, since $\vec{v}_1 \ne \vec{0}$ and none of the other vectors are a linear combination of the preceding vectors.  Since $W$ is closed under scalar multiplication and vector addition, we know $\spn ( \vec{v}_1, \vec{v}_2, \ldots, \vec{v}_i )$ is a subset of $W$. If $W = \spn ( \vec{v}_1, \vec{v}_2, \ldots, \vec{v}_i )$, we're done. Otherwise, there exists some vector $\vec{v}_{i+1}$ in $W$ but not in $\spn ( \vec{v}_1, \vec{v}_2, \ldots, \vec{v}_i )$.
 \[\vdots\]
@@ -3706,7 +3715,7 @@ ytick={0,1,...,4},
 Let $U$ be a subspace of $\R^n$. (Note that since $\R^n$ is a subspace of itself, this definition also applies to $U = \R^n$.) A list of vectors $\mathcal{B} = ( \vec{b}_1,\ldots, \vec{b}_c )$ is called a \textbf{basis} for $U$ if:
 \begin{enumerate}[label=(\roman*)]
 \item $\mathcal{B}$ is linearly independent.
-\item $\spn \mathcal{B} = \R^n$.
+\item $\spn \mathcal{B} = U$.
 \end{enumerate}
 \end{definition}
 \example Is $\mathcal{B} = \left( \bbbvec{0}{\pi}{0}, \bbbvec{3}{4}{0} \right)$ a basis of $\R^3$?
@@ -3806,8 +3815,8 @@ then the vector $(x_1,\ldots, x_c)$ is called the \textbf{$\mathcal{B}$-coordina
 \end{notes}
 \begin{tikzpicture}[scale=0.8]
 \vectorgrid[xmin=-5,xmax=10,ymin=-3,ymax=6,step=1,labint=2,xu=3,yu=1,xv=-4,yv=2]
-\node[above,blue] at (1.5,0.5){$b_1$};
-\node[above,blue] at (-2,1){$b_2$};
+\node[above,blue] at (1.5,0.5){$\vec{b}_1$};
+\node[above,blue] at (-2,1){$\vec{b}_2$};
 \end{tikzpicture}
 
 \begin{notes}
@@ -3849,7 +3858,7 @@ Since the list $( \vec{b}_1,\ldots,\vec{b}_c )$ is linearly independent, we know
 \begin{theorem}[Removing dependent vectors doesn't change span.]
 \label{theorem:removing-dependent-vectors}
 
-Suppose $L = ( a_1,\ldots,a_n )$ is a list of vectors, and $U=\spn ( a_1,\ldots,a_n )$. If one of the vectors $\vec{a}_j$ is a linear combination of the other vectors, then removing $\vec{a}_j$ from the list doesn't change the span. In other words, $U=\spn ( \vec{a}_1, \ldots, \vec{a}_{j-1}, \vec{a}_{j+1}, \ldots, \vec{a}_n )$.
+Suppose $L = ( \vec{a}_1,\ldots,\vec{a}_n )$ is a list of vectors, and $U=\spn ( \vec{a}_1,\ldots,\vec{a}_n )$. If one of the vectors $\vec{a}_j$ is a linear combination of the other vectors, then removing $\vec{a}_j$ from the list doesn't change the span. In other words, $U=\spn ( \vec{a}_1, \ldots, \vec{a}_{j-1}, \vec{a}_{j+1}, \ldots, \vec{a}_n )$.
 \end{theorem}
 
 \textbf{Partial proof.} Suppose $\vec{a}_j$ is a linear combination of the other vectors: 
@@ -4387,9 +4396,9 @@ We'll need the following lemma for the ``buy two, get one free'' theorem below.
 \end{bbox}
 
 \begin{book}
-\textbf{Proof.} The edge case where $n=0$, $U=\left\{ \vec{0} \right\}$, and $V = ()$ is left as exercise \ref{exercise:1.7edge-case}. So we'll assume $n >0$. Also, if all the vectors in $\mathcal{V}$ are $\vec{0}$, then $\mathcal{V}$ is certainly linearly dependent and $\spn ( \mathcal{V} ) = \left\{ \vec{0} \right\} \ne U$. So we can assume $\mathcal{V}$ has at least one non-zero vector in it.
+\textbf{Proof.} The edge case where $n=0$, $U=\left\{ \vec{0} \right\}$, and $V = ()$ is left as exercise \ref{exercise:1.7edge-case}. So we'll assume $n >0$.
 
-(\rightarrow) Suppose $\mathcal{V}$ is linearly dependent. By theorem \ref{theorem:characterization-of-linear-dependence}, one of the vectors in $\mathcal{V}$ can be written as a linear combination of the others, so we can remove this vector without changing the span (theorem \ref{theorem:removing-dependent-vectors}). If the remaining list is still dependent, repeat until you have an independent list $\mathcal{W}$. (We know this process has to stop before $\mathcal{W}$ is empty, because $\mathcal{V}$ has at least one non-zero vector in it.) 
+(\rightarrow) Suppose $\mathcal{V}$ is linearly dependent. By theorem \ref{theorem:characterization-of-linear-dependence}, one of the vectors in $\mathcal{V}$ can be written as a linear combination of the others, so we can remove this vector without changing the span (theorem \ref{theorem:removing-dependent-vectors}). If the remaining list is still dependent, repeat until you have an independent list $\mathcal{W}$. (We know this process has to stop eventually, maybe when $\mathcal{W}$ is $()$ which is defined to be independent.)
 
 Now, $\mathcal{W}$ can't span $U$, because if it did, it would be a basis of $U$ with fewer vectors than a basis ($n = \dim U$). Thus:
 
@@ -5257,6 +5266,7 @@ T ( \vec{e}_1 ) & \cdots & T ( \vec{e}_c )
 
 \example $T:\R^2\rightarrow\R^2$ reflects points across the $x_2$-axis. Find the standard matrix of $T$ and check that it works with a couple points.
 
+\begin{book}
 \bbtwocol{0.45}{0.55}{
 \begin{tikzpicture}[scale=1.2]
 \vectorgrid[xmin=-2.2,xmax=2.2,ymin=-1.5,ymax=1.5,step=1,labint=1,xu=-1,yu=0,xv=0,yv=1]
@@ -5277,6 +5287,7 @@ Checking that it works with $\vec{x}=(2,-1)$:
 0 & 1
 \end{bmatrix}\bbvec{2}{-1} = \bbvec{-2}{-1} \quad \quad \blacksquare \]
 }
+\end{book}
 
 \begin{notes}
 \vfill \hspace{2pt}
@@ -5619,11 +5630,11 @@ Vertical shear (points move vertically depending on $x_1$): \rule{2em}{0.8pt}
 \end{notes}
 
 Note: It turns out that $A(B \vec{x}) = \begin{bmatrix}
-    0 & 4 & 2 \\
-    2 & -10 & -18
+    -4 & -12 & 2 \\
+    -2 & -3 & -7
   \end{bmatrix}\vec{x}$ for all $\vec{x}$ in $\R^3$. Later in this section we'll figure out a formula for how to multiply two matrices that makes $AB = \begin{bmatrix}
-    0 & 4 & 2 \\
-    2 & -10 & -18
+    -4 & -12 & 2 \\
+    -2 & -3 & -7
 \end{bmatrix}$ and in general, $A(B \vec{x}) = (AB) \vec{x}$.
 
 
@@ -6573,7 +6584,7 @@ r_1\leftarrow r_1-4r_3\\ r_2\leftarrow r_2-2r_3\\ \hspace{2pt}
 r_1\leftarrow r_1+3r_2\\\hspace{2pt} \\\hspace{2pt}
 \end{matrix} \\
 &\sim \begin{bmatrix}[ccc|ccc]
-1 & 0 & 0 & -6 & -7 & -4\\
+1 & 0 & 0 & -6 & -7 & -10\\
 0 & 1 & 0&1& 1 & 2 \\
 0 & 0 & 1 &1 & 1 & 1
 \end{bmatrix} &\begin{matrix}
@@ -7051,7 +7062,7 @@ A\vec{b}_1 & \cdots & A\vec{b}_c
 
 \begin{theorem}[Rows of $BA$.]\label{theorem:rows-of-BA}
 
-Suppose $B$ is a $d \times r$ matrix, and A is an $r \times c$ matrix. Write the rows $B$ as column vectors $\vec{\beta}_1, \ldots \vec{\beta}_d$, so that $B = \bbbvec{\vec{\beta}_1^T}{\vdots}{\vec{\beta}_d^T}$. Then row $i$ of $BA$ is $\vec{\beta}_i^TA$ which is a linear combination of the rows of $A$ using the entries in $\vec{\beta}_i$ as weights.
+Suppose $B$ is a $d \times r$ matrix, and A is an $r \times c$ matrix. Write the rows of $B$ as column vectors $\vec{\beta}_1, \ldots \vec{\beta}_d$, so that $B = \bbbvec{\vec{\beta}_1^T}{\vdots}{\vec{\beta}_d^T}$. Then row $i$ of $BA$ is $\vec{\beta}_i^TA$ which is a linear combination of the rows of $A$ using the entries in $\vec{\beta}_i$ as weights.
 \end{theorem}
 % prove this in class too!
 
@@ -8542,6 +8553,10 @@ c & d
 \end{bmatrix} = ad-bc.$ (to be proven in exercises.)
 \end{bbox}
 
+\begin{notes}
+\columnbreak
+\end{notes}
+
 \exerciseheading
 
 For exercises \ref{exercise:3.1-basic-start} to \ref{exercise:3.1-basic-end} find $\det(A)$ by using column operations to transform $A$ into a triangular matrix.
@@ -8891,11 +8906,11 @@ Suppose $\det$ is a function satisfying the definition of a determinant. Define 
 \begin{align*}
  d(A) &= (-1)^{1+1}a_{11}\det(A_{11}) + (-1)^{2+1}a_{21}\det(A_{21}) + \\
 & \hspace{8.3em} + \cdots + (-1)^{c+1}a_{c1}\det(A_{c1}) \\
-&= \sum_{k=1}^c(-1)^{k+1}a_{k1}d(A_{k1})
+&= \sum_{k=1}^c(-1)^{k+1}a_{k1}\det(A_{k1})
 \end{align*}
 \begin{enumerate}[label=(\roman*)]
 \item $\det(A) = d(A)$. (This also implies the determinant is unique.)
-\item Instead of row 1, $d(A)$ can be calculated along any row or column, and the result is the same:
+\item Instead of column 1, $d(A)$ can be calculated along any row or column, and the result is the same:
 \begin{align*}
 d(A) &= \sum_{k=1}^c(-1)^{i+k}a_{ik}d(A_{ik}) \quad \text{(along row } i)\\
     &=  \sum_{k=1}^c(-1)^{k+j}a_{kj}d(A_{kj}) \quad \text{(along column }j)
@@ -8980,6 +8995,10 @@ To get the formula for the row expansions, use the fact that $d(A^T)=d(A)$, and 
 \end{book}
 
 The reason for the term ``cofactor expansion'' is that $C_{ij} = (-1)^{i+j}\det(A_{ij})$ is called the $(i,j)$-\textbf{cofactor} of $A$. Cofactors can describe some nice formulas for $A^{-1}$ as well as solutions of $A\vec{x}=\vec{y}$ that will probably be included in a future version of this book.
+
+\begin{notes}
+\columnbreak
+\end{notes}
 
 \example Let  for $A=\begin{bmatrix}
 2 & 4 & \sqrt{7} \\
@@ -13945,9 +13964,9 @@ Let's try $a-1 = 17-1=8(2)$. Now, $17$ cannot be written $n^2$ for any odd integ
 
 \exatend Show that if $n,m$ are even integers, then $n+m$ is even.
 
-\exatend Show that if $n,m$ are odd integers, then $n+m$ is even.
+\exatend \label{exercise:appendix-n-m} Let $n,m$ be integers. Show that if $n,m$ are odd, then $n+m$ is even.
 
-\exatend Show that if $a$ is even, then $3a$ is even.
+\exatend Let $a$ be an integer. Show that if $a$ is even, then $3a$ is even.
 
 \exatend Show that if $n$ is an integer, then $(n+1)^2-n^2$ is odd.
 
@@ -13957,8 +13976,13 @@ Let's try $a-1 = 17-1=8(2)$. Now, $17$ cannot be written $n^2$ for any odd integ
 
 \exatend Suppose $n$ is an integer. Show that $n$ is odd if and only if $n+5$ is odd.
 
-\exatend Show that if $n$ is an odd integer, then there exist integers $p,q$ such that $p^2-q^2=n$.
+\exatend (T/F?) The statement ``If $P$, then $Q$'' is logically equivalent to ``If $Q$, then $P$.''
 
+\exatend (T/F?) The statement ``If $P$, then $Q$'' is logically equivalent to ``If not $Q$, then not $P$.''
+
+\exatend Write the converse of the statement in exercise \ref{exercise:appendix-n-m}. Either prove this converse or find a counterexample.
+
+\exatend Show that if $n$ is an odd integer, then there exist integers $p,q$ such that $p^2-q^2=n$.
 
 \exatend Prove, or find a counterexample to the statement: There exist integers $p,q$ such that $p^2-q^2=n$ if and only if $n$ is odd.
 
