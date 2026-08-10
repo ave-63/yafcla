@@ -1,17 +1,19 @@
+%\DocumentMetadata{tagging=on, tagging-setup={math/setup=mathml-SE}}
 % Using report class because it's mostly like article but has chapters. https://tex.stackexchange.com/questions/36988/regarding-the-book-report-and-article-document-classes-what-are-the-mai
 \documentclass[11pt, letterpaper, landscape]{report}
 \usepackage{multicol}
 \usepackage[inline]{enumitem}
+
 
 \usepackage[letterpaper, left=.4in, right=.4in, top=.25in, bottom=.5in]{geometry}
 
 \usepackage{graphicx}
 \graphicspath{{/home/ben/nxc/dont_delete_images/}}
 
-\usepackage{xcolor}
-\usepackage{fontspec}
-\usepackage{amsmath}
-\usepackage{amssymb}
+\usepackage{xcolor} % tagging compatible
+\usepackage{fontspec} % tagging compatible
+\usepackage{amsmath} % tagging partially compatible? wtf?
+\usepackage{amssymb} % needed for blacksquare. tagging partially compatible. incompatible with unicode-math. CHANGE!
 \usepackage{accents}
 \usepackage{unicode-math}
 \usepackage{libertinus}
@@ -57,6 +59,7 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Adjusting spacing; maybe more adjusting needed later
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \setlength\parskip{1.4ex plus 0.2ex minus 0.2ex}
 \setlength\parindent{0pt}
@@ -484,6 +487,13 @@ In Chapter \ref{chap:symmetric-matrices} we'll learn about symmetric matrices an
 
 Finally, Chapter \ref{chap:abstract-vector-spaces} is about how most everything we've learned about vectors actually applies to many kinds of mathematical objects such as functions, polynomials, matrices, and solutions to differential equations.
 
+\textbf{Prerequisites:} Linear algebra does not actually require much knowledge beyond basic algebra. You definitely need to have some experience solving systems of equations like:
+\[\begin{aligned}
+  x + y &=3 \\
+  -x + 2y &= 0
+\end{aligned}\] 
+But if you're rusty, we cover the method here, with plenty of opportunity for practice. The only place you'll need calculus is for some examples and exercises in chapter \ref{chap:abstract-vector-spaces}. However, there's a reason most schools usually make calculus a prerequisite course: linear algebra is difficult, in a way that makes most students who haven't taken some calculus struggle. There are a lot of definitions and theorems, which require some thinking and studying skills to learn. In calculus, you get experience reading, applying, and justifying theorems, which can help prepare you for linear algebra.
+
 \chapter{Existence and Uniqueness of Solutions}
 \label{chap:existence-and-uniqueness-of-solutions}
 
@@ -907,7 +917,7 @@ x_2 &= 2
 \exatend (T/F?) Each of the elimination operations (swapping, scaling, multaddiplacement), can be reversed using an elimination operation.
 
 
-\exatend (T/F?) If two systems of linear equations have the same solution sets, then they're consistent with each other.
+\exatend (T/F?) If two systems of linear equations have the same solution sets, then they're consistent with each other. TODO: Delete this question. It stinks.
 
 \exatend  (T/F?) If two linear systems have the same solution set, then they're equivalent to each other.
 
@@ -975,7 +985,7 @@ x_1 + 2x_2 &= 3 \\
 cx_1 + dx_2 &= 6
 \end{aligned}$
 
-\exatend What can you conclude about $a,b,c$ and $d$ if the following system is inconsistent?
+\exatend Suppose $a \ne 0$. What can you conclude about $a,b,c,$ and $d$ if the following system is inconsistent?
 $\begin{aligned}[t]
 ax_1 + bx_2 &= 0 \\
 cx_1 + dx_2 &= 5
@@ -1197,7 +1207,7 @@ And the following are in reduced row echelon form:
 \end{book}
 
 \begin{definition}
-If there is a reduced row echelon matrix equivalent to $A$ with a leading entry in row $i$, column $j$, we say $i,j$ is a \textbf{pivot position} of $A$, and column $j$ is a \textbf{pivot column}.
+If there is a reduced row echelon matrix row-equivalent to $A$ with a leading entry in row $i$, column $j$, we say $i,j$ is a \textbf{pivot position} of $A$, and column $j$ is a \textbf{pivot column}.
 \end{definition}
 \emph{Note:} As we'll see in theorem \ref{theorem:uniqueness-of-rref}, every matrix is row-equivalent to a \emph{unique} reduced row echelon matrix, which means we don't have to worry about situations where, say $2,2$ is a leading entry in one reduced row echelon form of $A$, but not a leading entry in another reduced row echelon form of $A$.
 
@@ -1327,7 +1337,7 @@ This \emph{set-builder notation} stands for ``the set of all points of the form 
 
 \exerciseheading
 
-For exercises \ref{exercise:1.2.0b} through \ref{exercise:1.2.0e}, is the matrix in row echelon form? What about reduced row echelon form? If it's not in reduced row echelon form, use Gaussian elimination to make it so.
+For exercises \ref{exercise:1.2.0b} through \ref{exercise:1.2.0e}, is the matrix in row echelon form? What about reduced row echelon form? If it's not in reduced row echelon form, use Gaussian elimination (in the form of row operations) to make it so.
 
 \exatend \label{exercise:1.2.0b} $
 \begin{bmatrix}
@@ -2860,7 +2870,9 @@ node[below] {$\vec{w}$};
 \end{bmatrix}$
 \end{horiparts}
 
-\exatend Each of the following are \emph{coefficient} matrices for linear systems. In other words, each is a matrix $A$ for a matrix equation $A \vec{x} = \vec{b}$. Which system(s) are always consistent, no matter vector $\vec{b}$ is on the other side of the equation?
+\exatend Each of the following is a \emph{coefficient} matrix for a linear system. In other words, each is a matrix $A$ for a system of equations with augmented matrix $\begin{bmatrix}[c|c]
+A & \vec{y}
+\end{bmatrix}$.  Which matrices guarantee the system is always consistent, no matter vector $\vec{y}$ is on the other side of the equation?
 
 \begin{horiparts}{3}
 \item $\begin{bmatrix}
@@ -2879,7 +2891,9 @@ node[below] {$\vec{w}$};
 \end{bmatrix}$
 \end{horiparts}
 
-\exatend Write your own example of a matrix $A$ that makes $A\vec{x}=\vec{0}$ have an infinite number of solutions. Justify your answer.
+\exatend Write your own example of a matrix $A$ that makes the system with augmented matrix $\begin{bmatrix}[c|c]
+A & \vec{y}
+\end{bmatrix}$ have an infinite number of solutions. Justify your answer.
 
 \exatend Which of the following is the solution set of $\begin{aligned}
 x_1 + 2x_2 &= 0 \\
@@ -3043,6 +3057,8 @@ Remember to give some justification for all True/False answers:
 
 \exatend (T/F?) A system of equations with more equations than variables cannot have an infinite number of solutions.
 
+
+% This question stinks, because of how tricky it is. It makes students feel bad for very little benefit.
 \exatend (T/F?) If $\vec{u}$ and $\vec{v}$ are in $\R^c$, and $\vec{v}$ can't be written as a multiple of $\vec{u}$, then the list $\vec{u}, \vec{v}$ is linearly independent. \hintfootnote{Be careful.}
 
 \exatend (T/F?) If a $10 \times 12$ matrix has 10 pivot columns, then the span of the columns equals $\R^{10}$.
@@ -3057,7 +3073,9 @@ Remember to give some justification for all True/False answers:
 
 \exatend Explain, using theorem \ref{theorem:1.4existence}, why a set of fewer than $r$ vectors cannot span $\R^r$.
 
-\exatend Suppose $A$ is an $r \times c$ matrix, and for all $\vec{y}$ in $\R^r$, the equation $A\vec{x}=\vec{y}$ has at most one solution. Show that the columns of $A$ are linearly independent, using the definition. 
+\exatend Suppose $A$ is an $r \times c$ matrix, and for all $\vec{y}$ in $\R^r$, the system of equations with augmented matrix $\begin{bmatrix}[c|c]
+A & \vec{y}
+\end{bmatrix}$ has at most one solution. Show that the columns of $A$ are linearly independent, using the definition. 
 
 \exatend Suppose $A$ is an $r \times c$ matrix with $c$ pivot columns. Show that the columns of $A$ are linearly independent.
 
@@ -3192,7 +3210,7 @@ A \textbf{subspace} $U$ of $\R^n$ is a subset of $\R^n$ for which:
 \begin{theorem}[Null spaces are subspaces.]
 \label{theorem:null-spaces-are-subspaces}
 
-For any $r \times c$ vector $A =\begin{bmatrix}
+For any $r \times c$ matrix $A =\begin{bmatrix}
 \vec{a}_1 & \cdots & \vec{a}_c\end{bmatrix}$
 , the null space of $A$ is a subspace of $\R^c$.
 \end{theorem}
@@ -3389,7 +3407,7 @@ If $W$ is a subspace of $\R^n$, then $W=\spn (\vec{v}_1,\ldots, \vec{v}_c)$ for 
 \[\vdots\]
 \textbf{Step $i$.} The list $\vec{v}_1,\vec{v}_2, \ldots, \vec{v}_i$ is linearly independent by theorem \ref{theorem:one-vector-is-independent}, since $\vec{v}_1 \ne \vec{0}$ and none of the other vectors are a linear combination of the preceding vectors.  Since $W$ is closed under scalar multiplication and vector addition, we know $\spn ( \vec{v}_1, \vec{v}_2, \ldots, \vec{v}_i )$ is a subset of $W$. If $W = \spn ( \vec{v}_1, \vec{v}_2, \ldots, \vec{v}_i )$, we're done. Otherwise, there exists some vector $\vec{v}_{i+1}$ in $W$ but not in $\spn ( \vec{v}_1, \vec{v}_2, \ldots, \vec{v}_i )$.
 \[\vdots\]
-This process must end before step $n+1$ because it's impossible to have a linearly independent list $\vec{v}_1, \vec{v}_2, \ldots, \vec{v}_{n+1}$ with more vectors than entries in each vector by theorem \ref{theorem:more-vectors-than-entries-dependent}.
+This process must end before step $n+1$ because it's impossible to have a linearly independent list $\vec{v}_1, \vec{v}_2, \ldots, \vec{v}_{n+1}$ with more vectors than entries in each vector by theorem \ref{theorem:more-vectors-than-entries-dependent}. \blacksquare
 \end{book}
 
 \begin{notes}
@@ -3518,7 +3536,7 @@ node[right] {$\vec{v}$};
 \columnbreak
 \exerciseheading
 
-\exatend Suppose $A$ is an $r \times c$ matrix, $\vec{u}$ is in $\nul A$, and $\vec{v}$ is in $\col A$. Fill in each blank with $\vec{u}$ or $\vec{c}$.
+\exatend Suppose $A$ is an $r \times c$ matrix, $\vec{u}$ is in $\nul A$, and $\vec{v}$ is in $\col A$. Fill in each blank with $\vec{u}$ or $\vec{v}$.
 \begin{enumerate}[label=(\alph*)]
 \item The entries of \rule{2em}{0.8pt} are weights of a linear combination of columns of $A$.
 \item \rule{2em}{0.8pt} is a linear combination of columns of $A$.
@@ -3643,7 +3661,7 @@ ytick={0,1,...,4},
 \exatend Prove that if the set $W = \left\{ \vec{u}+t\vec{v}: t \text{ is in } \R \right\}$ is a subspace then the list of vectors $\vec{u}, \vec{v}$ is linearly dependent.
 
 % a bit of a challenge. Trick is to show it's a span of a vector, in either case.
-\exatend Prove that if the list of vectors $\vec{u}, \vec{v}$ is linearly dependent, then the set $W = \left\{ \vec{u}+t\vec{v}: t \text{ is in } \R \right\}$ is a subspace. \hintfootnote{Consider the two separate cases: $\vec{u} = \vec{0}$ or $\vec{u} \ne \vec{0}$.}
+\exatend Prove that if the list of vectors $\vec{u}, \vec{v}$ is linearly dependent and $v \ne \vec{0}$, then the set $W = \left\{ \vec{u}+t\vec{v}: t \text{ is in } \R \right\}$ is a subspace. \hintfootnote{Consider the two separate cases: $\vec{u} = \vec{0}$ or $\vec{u} \ne \vec{0}$.}
 
 % challenge. union of x and y-axes works: (x,y) : x=0 or y=0
 \exatend Give an example of a non-empty subset of $\R^2$ that is closed under scalar multiplication, but is not a subspace of $\R^2$.
@@ -3651,13 +3669,8 @@ ytick={0,1,...,4},
 % challenge. Quadrant 1 works.
 \exatend Give an example of a non-empty subset of $\R^2$ that is closed under vector addition but is not a subspace of $\R^2$.
 
-% TODO: this might be onerous. Try it out.
-\exatend Suppose $A$ is an $r \times c$ matrix, $\vec{u} = ( u_1, u_2, \ldots, u_c )$ is in the null space of $A$ and $(b_1,b_2,\ldots,b_c)$ is one of the rows of $A$.
-\begin{enumerate}[label=(\alph*)]
-\item Explain why $u_1b_1 + u_2b_2 + \cdots + u_cb_c=0$.
-\item Suppose  $\vec{x} = ( x_1, x_2, \ldots, x_c )$ is in the row space of $A$. Explain why $u_1x_1+u_2x_2 + \cdots + u_cx_c = 0$.
-\end{enumerate}
-
+\exatend Suppose $A$ is an $r \times c$ matrix, $\vec{u} = ( u_1, u_2, \ldots, u_c )$ is in the null space of $A$ and $(b_1,b_2,\ldots,b_c)$ is one of the rows of $A$. Explain why $u_1b_1 + u_2b_2 + \cdots + u_cb_c=0$.
+% \item Suppose  $\vec{x} = ( x_1, x_2, \ldots, x_c )$ is in the row space of $A$. Explain why $u_1x_1+u_2x_2 + \cdots + u_cx_c = 0$. canceled second part: too painful with notation/theory of 1.5.
 
 \exatend The \textbf{intersection} of two sets $P$ and $Q$ is defined as $P \cap Q = \left\{ x : x \text{ is in } P \text{ and } x \text{ is in } Q \right\}$. For example, $\spn(1,2) \cap \spn(3,0) = \left\{ \vec{0} \right\}$. And $\left\{ (x_1,x_2) : x_1 > 0 \right\} \cap \left\{ (x_1,x_2) : x_2>0 \right\}$ is quadrant I. Prove that if $P$ and $Q$ are subspaces of $\R^c$, then $P \cap Q$ is a subspace too.
 
@@ -3752,7 +3765,7 @@ is called the $3\times 3$ \textbf{identity matrix}.)
 \begin{book}
 \textbf{Solution.} There are many ways to show that $\mathcal{E}$ is linearly independent and spans $\R^3$. One way is to notice that $\begin{bmatrix}
 \vec{e}_1 & \vec{e}_2 & \vec{e}_3
-\end{bmatrix}$ has a pivot in every column, so $\vec{E}$ is linearly independent by the uniqueness theorem (\ref{theorem:1.4uniqueness}). And Since $\begin{bmatrix}
+\end{bmatrix}$ has a pivot in every column, so $\vec{E}$ is linearly independent by the uniqueness theorem (\ref{theorem:1.4uniqueness}). And since $\begin{bmatrix}
 \vec{e}_1 & \vec{e}_2 & \vec{e}_3
 \end{bmatrix}$ has a pivot in every row, the existence theorem (\ref{theorem:1.4existence}) says $\mathcal{E}$ spans $\R^3$. \blacksquare
 \end{book}
@@ -4156,13 +4169,13 @@ Now, let's say the top $k$ rows of $F$ are pivot rows, and write them in reverse
 \end{bmatrix}\]
 with $1$'s in the main diagonal and 0's everywhere else, and it's columns, $\mathcal{E} =  (\vec{e}_1, \vec{e}_2, \ldots, \vec{e}_n)$ are called the standard basis of $\R^n$. Suppose $\mathcal{B} = (  \vec{b}_1, \ldots, \vec{b}_n)$ is another basis of $\R^n$.
 \begin{enumerate}[label=(\alph*)]
-\item Explain why $\left[ \vec{b}_1 \right]_{\mathcal{B}} = \vec{e}_1, \ldots, \left[ \vec{b}_n \right]_{\mathcal{B}} = \vec{e}_n$.
-\item Explain why $\left[ \vec{b}_1 \right]_{\mathcal{E}} = \vec{b}_1, \ldots, \left[ \vec{b}_n \right]_{\mathcal{E}} = \vec{b}_n$.
+\item True/False? For each $1 \le i \le n$, we have $\left[ \vec{b}_i \right]_{\mathcal{B}} = \vec{e}_i$.
+\item True/False? For each $1 \le i \le n$, we have $\left[ \vec{b}_i \right]_{\mathcal{E}} = \vec{b}_i$.
 \end{enumerate}
 
 \exatend \label{exercise:prove-unique-representation} Write the proof of theorem \ref{theorem:unique-representation} with the gaps filled in. 
 
-\exatend \label{exercise:prove-removing-dependent} Write the finished proof of \ref{theorem:removing-dependent-vectors}.
+\exatend \label{exercise:prove-removing-dependent} Write the finished proof of theorem \ref{theorem:removing-dependent-vectors}.
 
 \textbf{\ref{subsec:bases-for-column-and-row-spaces} Bases for Column and Row Spaces}
 
@@ -4293,7 +4306,7 @@ If a subspace $U$ of $\R^c$ has a basis with $n$ vectors in it, then any list wi
 
 \begin{book}
 \textbf{Proof.} Let's call the basis $\mathcal{B}=(  \vec{b}_1, \ldots ,\vec{b}_n)$, and suppose $\vec{z}_1, \ldots, \vec{z}_j$ is a list of vectors in $U$ with $j>n$. Recall the definition of $\left[ \vec{w} \right]_{\mathcal{B}}$ is the vector $(x_1,\ldots,x_n)$ such that $x_1\vec{b}_1+\cdots+x_nb_n = \vec{w}$. So, by definition, $\left[ \vec{z}_1 \right]_{\mathcal{B}},\ldots,\left[ \vec{z}_j \right]_{\mathcal{B}}$ is a list of $j$ vectors in $\R^n$, and since $j>n$, theorem \ref{theorem:more-vectors-than-entries-dependent} says the list is dependent in $\R^n$. So there exists $(y_1,\ldots,y_j)\ne \vec{0}$, such that:
-\[y_1 \left[ \vec{z}_1 \right] + \cdots + y_j \left[ \vec{z}_j \right] = \vec{0}_n \]
+\[y_1 \left[ \vec{z}_1 \right]_{\mathcal{B}} + \cdots + y_j \left[ \vec{z}_j \right]_{\mathcal{B}} = \vec{0}_n \]
 (Here, $\vec{0}_n$ denotes the zero vector in $\R^n$, with $n$ zeros.) Using theorem \ref{theorem:properties-of-coordinates} parts (i) and (ii), we can rewrite the left side:
 \begin{align*}
 y_1 \left[ \vec{z}_1 \right]_{\mathcal{B}} + \cdots + y_j \left[ \vec{z}_j \right]_{\mathcal{B}} &= \vec{0}_n \\
@@ -4646,7 +4659,7 @@ $ is an $r \times c$ matrix. The following are equivalent:
 \exatend Exercise \ref{exercise:1.5-col-nul} in 1.5 asked you to find a $4\times4$ matrix $A$ with $\col A = \nul A$. Show that it's impossible to find a $5\times 5$ matrix $A$ with $\col A = \nul A$.
 
 %axler
-\exatend Explain why there does not exist a $2\times 4$ matrix whose null space is $\left\{ (x_1,x_2,x_3,x_4:x_1=x_3) \right\}$.
+\exatend Explain why there does not exist a $2\times 4$ matrix whose null space is $\{ (x_1,x_2,x_3,x_4):x_1=x_3 \}$.
 
 % tricky! (axler) Soln: a list of the 3 basis vectors u1,u2,u3 plus the 3 basis vectors v1,v2,v3 makes a list of 6 vectors, which is dependent since 6>5. x1u1+x2u2+x3u3+x4v1+x5v2+x6v3 = 0 means x1u1+x2u2+x3u3 = -x4v1-x5v2-x6v3, which is in both.
 \exatend (\emph{challenge}) Suppose $U$ and $V$ are each $3$-dimensional subspaces of $\R^5$. Show that there is a nonzero vector that is in both $U$ and $V$.
@@ -5541,7 +5554,7 @@ Vertical shear (points move vertically depending on $x_1$): \rule{2em}{0.8pt}
 
 \exatend Find the standard matrix for an $\R^2\rightarrow \R^2$ linear transformation that rotates points $90^{\circ}$ counterclockwise, and then stretches all points away from the origin by a factor of 2.
 
-\exatend Find the standard matrix for an $\R^3\rightarrow \R^3$ linear transformation that projects points onto the nearest point on the $yz$-plane.
+\exatend Find the standard matrix for an $\R^3\rightarrow \R^3$ linear transformation that projects points onto the nearest point on the $yz$-plane. For example, $T(8,9,10) = (0,9,10)$.
 
 \exatend Find the standard matrix for an $\R^2\rightarrow \R^2$ linear transformation that reflects points across the line $x_1=x_2$.
 
@@ -5549,7 +5562,7 @@ Vertical shear (points move vertically depending on $x_1$): \rule{2em}{0.8pt}
 
 \exatend Find the standard matrix for $T:\R^2\rightarrow \R^3$ defined by $T(x_1,x_2) = (-x_2, 3x_1+x_2, 8x_1)$.
 
-\exatend Find the standard matrix for $T:\R^4\rightarrow \R^2$ defined by $T(x_1,x_2,x_3,x_1) = (-2x_2+\pi x_4, x_1+x_2+x_3+x_4)$.
+\exatend Find the standard matrix for $T:\R^4\rightarrow \R^2$ defined by $T(x_1,x_2,x_3,x_4) = (-2x_2+\pi x_4, x_1+x_2+x_3+x_4)$.
 
 \exatend Find the standard matrix for an $\R^2\rightarrow\R^2$ that vertically shears $\vec{e}_1$ to $\vec{e}_1+0.5\vec{e}_2$ but leaves the $x_2$-axis unchanged.
 
@@ -5585,7 +5598,7 @@ Vertical shear (points move vertically depending on $x_1$): \rule{2em}{0.8pt}
 
 \exatend \emph{(Challenge)} Find the matrix of the transformation $T:\R^2\rightarrow\R^2$ that projects points onto the nearest point on the line $x_2=2x_1$. \hintfootnote{Let $\theta$ be the angle from the $x_1$-axis up to the line. Start by rotating points by $-\theta$, which brings the line to the $x_1$-axis. Then project points onto the $x_1$-axis, and then rotate them back by $\theta$.}
 
-\exatend \emph{(Challenge)} Find an example of a function $f:\R^2\rightarrow\R$ such that $f(k\vec{v}) = kf(\vec{v})$ for all real numbers $k$ and all $\vec{v}$ in $\R^2$.
+\exatend \emph{(Challenge)} Find an example of a function $f:\R^2\rightarrow\R$ such that $f(k\vec{v}) = kf(\vec{v})$ for all real numbers $k$ and all $\vec{v}$ in $\R^2$, but $f$ is not linear.
 
 
 \columnbreak
@@ -6412,8 +6425,8 @@ For exercises \ref{exercise:2.2-mult-start} through \ref{exercise:2.2-mult-end},
 %TODO: result (a) is a theorem in 2.3; let's keep this here for fun though. But let's add some examples of elementary matrices to motivate this idea.
 \exatend (\emph{challenge}) \label{exercise:2.2AB-rows-are-combos-of-B-rows}
 \begin{enumerate}[label=(\alph*)]
-\item Show that each row of $AB$ is a linear combination of the rows of $B$. \hintfootnote{Theorem \ref{theorem:ABT-BTAT}.}
-\item Show that if $AB$ has a row of all zeros, then the rows of $B$ are linearly dependent.
+\item Show that each row of $AB$ is a linear combination of the rows of $B$, using entries from a row of $A$ as weights. \hintfootnote{Theorem \ref{theorem:ABT-BTAT}.}
+\item Show that if $AB$ has a row of all zeros, and $A$ doesn't have any non-zero rows, then the rows of $B$ are linearly dependent.
 \end{enumerate}
 
 %treil credit
@@ -6869,7 +6882,7 @@ So, any solution of the equation is actually $A^{-1}\vec{y}$ and the solution is
 \begin{enumerate}[label=(\alph*)]
 \item Find $A^{-1}$ by row-reducing $\begin{bmatrix}[c|c]
 A & I
-\end{bmatrix}$ to $\begin{bmatrix}
+\end{bmatrix}$ to $\begin{bmatrix}[c|c]
 I & A^{-1}
 \end{bmatrix}$.
 \item Find $A^{-1}$ using the formula in theorem \ref{theorem:2x2-inverses}.
@@ -6909,7 +6922,7 @@ I & A^{-1}
 
 \exatend Prove or give a counterexample: If $A$ and $B$ are invertible, then $A+B$ is invertible.
 
-\exatend Prove or give a counterexample: If $A$ is invertible, and $AB = BC$, then $B=C$.
+\exatend Prove or give a counterexample: If $A$ is invertible, and $AB = AC$, then $B=C$.
 
 \exatend Prove or give a counterexample: If $A$ has two identical columns, then $A$ is not invertible.
 
@@ -7182,7 +7195,7 @@ The above examples also justify the following theorem. They're not formal proof,
 
 \begin{theorem}[Elementary matrices do column operations.] \label{theorem:elementary-column-operations}
 
-If $A$ is any $r\times c$ matrix, and $E$ is an $c\times c$ elementary matrix that is the result of doing some row operation to $I$, then $AE$ is the result of doing the same column operation to $A$.
+If $A$ is any $r\times c$ matrix, and $E$ is an $c\times c$ elementary matrix that is the result of doing some column operation to $I$, then $AE$ is the result of doing the same column operation to $A$.
 \end{theorem}
 
 \begin{notes}
@@ -7416,7 +7429,7 @@ which says the same sequence of row operations that reduce $A$ to $I$ also reduc
 \exatend (T/F?) All elementary matrices are invertible.
 
 \exatend (T/F?) If $\vec{a}_1, \ldots, \vec{a}_c$ is a list of $c$ linearly independent vectors in $\R^c$, then $\begin{bmatrix}
-\vec{a}_1 \cdots \vec{a}_c
+\vec{a}_1 & \cdots & \vec{a}_c
 \end{bmatrix}$ is an invertible matrix.
 
 \exatend (T/F?) If $A$ is $c\times c$, and $\dim(\nul A) = c$, then $A$ is invertible.
@@ -7448,7 +7461,7 @@ which says the same sequence of row operations that reduce $A$ to $I$ also reduc
 0 & 1 & 0 & 0 \\
 1 & 0 & 0 & 0 \\
 0 & 0 & 0 & 1 
-\end{bmatrix}$, find $F^{-1}$, and check by multiplying $FF^{-1}$. Why does this also show that $F^{-1}F$.
+\end{bmatrix}$, find $F^{-1}$, and check by multiplying $FF^{-1}$. Why does this also show that $F^{-1}F = I$?
 
 %doesn't use 2.4 but that's ok
 \exatend Suppose $A = \begin{bmatrix}
@@ -8657,10 +8670,10 @@ e&0 & 0 & 0 & 0
 
 
 %credit: david austin
-\exatend Suppose $T(\vec{x}) = A\vec{x}$ is a transformation that reflects points across some line through the origin. For some arbitrary line, draw a picture of $T(\vec{e}_1)$ and $T(\vec{e}_2)$. Thinking about area of $\pgram A$, what is $\det(A)$? \creditfootnote{Inspired by an exercise in David Austin's excellent \emph{Understanding Linear Algebra}.}
+\exatend Suppose $T(\vec{x}) = A\vec{x}$ is an $\R^2\rightarrow \R^2$ transformation that reflects points across some line through the origin. For some arbitrary line, draw a picture of $T(\vec{e}_1)$ and $T(\vec{e}_2)$. Thinking about area of $\pgram A$, what is $\det(A)$? \creditfootnote{Inspired by an exercise in David Austin's excellent \emph{Understanding Linear Algebra}.}
 
 %credit: david austin
-\exatend Suppose $T(\vec{x}) = A\vec{x}$ is a transformation that projects all points to the nearest point on some line through the origin. For some arbitrary line, draw a picture of $T(\vec{e}_1)$ and $T(\vec{e}_2)$. Thinking about area of $\pgram A$, what is $\det(A)$? \creditfootnote{Inspired by D. Austin.}
+\exatend Suppose $T(\vec{x}) = A\vec{x}$ is an $\R^2\rightarrow \R^2$ transformation that projects all points to the nearest point on some line through the origin. For some arbitrary line, draw a picture of $T(\vec{e}_1)$ and $T(\vec{e}_2)$. Thinking about area of $\pgram A$, what is $\det(A)$? \creditfootnote{Inspired by D. Austin.}
 
 \exatend Use the antisymmetry theorem (but no other theorems/lemmas from this section) to show that if two columns of $A$ are equal, then $\det(A) = 0$.
 
@@ -8691,7 +8704,7 @@ c & d
 
 \exatend Suppose $(p,y_p)$ and $(q,y_q)$ two points in $\R^2$, and you want to find $b,m$ such that the graph of $y = b+mx$ includes the two points. 
 \begin{enumerate}[label=(\alph*)]
-\item Explain why finding the parabola that includes the three points is equivalent to solving $A\bbvec{b}{m} = \bbvec{y_p}{y_q}$ for $(b,m)$, where $A=\begin{bmatrix}
+\item Explain why finding the line that includes the two points is equivalent to solving $A\bbvec{b}{m} = \bbvec{y_p}{y_q}$ for $(b,m)$, where $A=\begin{bmatrix}
 1 & p  \\
 1 & q 
 \end{bmatrix}$.
@@ -9228,7 +9241,7 @@ If you struggle with the rest of these warm-ups, the examples and discussions in
 \columnbreak
 \end{notes}
 
-\exercise \emph{(Warm-up)} With $\vec{b}_1=\bbvec{1}{1}, \vec{b}_2=\bbvec{2}{-1}$ as in the last exercise, let $P = \begin{bmatrix}
+\exercise \emph{(Warm-up)} With $\vec{b}_1=\bbvec{2}{2}, \vec{b}_2=\bbvec{4}{-2}$ as in the last exercise, let $P = \begin{bmatrix}
 \vec{b}_1 & \vec{b}_2
 \end{bmatrix}$.
 \begin{enumerate}[label=(\alph*)]
@@ -9676,6 +9689,7 @@ It's left to the reader to try other choices of $\vec{x}_0$. If you do, you'll f
 \vfill
 \end{notes}
 
+
 \example \label{example:4.1-coordinates-2} Let $A=\begin{bmatrix}
 0.4 & 0.2 \\
 -0.3 & 1.1
@@ -9827,11 +9841,11 @@ It's left to the reader to try other choices of $\vec{x}_0$. If you do, you'll f
 \exatend A Blockbuster$^{\text{TM}}$ video rental store has three locations, $x,y$, and $z$. Every week, $90\%$ of the videos at location $x$ remain there, and $5\%$ are rented from $x$ and returned to $y$, with the other 5\% returned to $z$. And $80\%$ of the videos at location $y$ remain there; the other 20\% are rented from $y$ and returned to $z$. At location $z$, 99\% of the videos remain there every week, and the other $1\%$ is rented from $z$ and returned to $x$. Find $A$ so that $\bbbvec{x_{n+1}}{y_{n+1}}{z_{n+1}} = A \bbbvec{x_n}{y_n}{z_n}$ describes how the videos move around, where $n$ is the number of weeks.
 
 
-\exatend (T/F?) Define a sequence of vectors starting with $\vec{x}_0$, and continuing with $\vec{x}_{n+1}=A\vec{x}_n$. Then $\vec{x}_n=A^n\vec{x}_0$.
+\exatend (T/F?) If $\vec{x}_0, \vec{x}_1, \vec{x}_2,\ldots$ is a sequence of vectors starting with $\vec{x}_0$, and continuing with $\vec{x}_{n+1}=A\vec{x}_n$, then $\vec{x}_n=A^n\vec{x}_0$.
 
 \exatend (T/F?) If $A = PDP^{-1}$, then $A=D$ since the $P$ and $P^{-1}$ cancel out.
 
-\exatend (T/F?) Every matrix that is row-equivalent to a diagonal matrix is diagonalizable.
+\exatend (T/F?) By definition, every matrix that is row-equivalent to a diagonal matrix is diagonalizable.
 
 \exatend (T/F?) If $A$ is diagonalizable, it is invertible.
 
@@ -9929,8 +9943,8 @@ It's left to the reader to try other choices of $\vec{x}_0$. If you do, you'll f
 \begin{enumerate}[label=(\alph*)]
 \item Find $A \vec{x}$  and $A \vec{v}$.
 \item Sketch a graph of $\vec{x}$, $\vec{v}$, $A \vec{x}$, and $A \vec{v}$.
-\item T/F? $A \vec{x}$ is a scalar multiple of $x$.
-\item T/F? $A \vec{v}$ is a scalar multiple of $v$.
+\item T/F? $A \vec{x}$ is a scalar multiple of $\vec{x}$.
+\item T/F? $A \vec{v}$ is a scalar multiple of $\vec{v}$.
 \end{enumerate}
 
 \begin{tikzpicture}[line cap=round,line join=round]%,x=2.0cm,y=1.0cm]
@@ -10064,7 +10078,7 @@ Part (b) of the last example illustrates a connection between diagonalization an
 \begin{theorem}[Diagonalization Theorem.]
 \label{theorem:diagonalization}
 
-A $c \times c$ matrix $A$ is diagonalizable if and only if $A$ has $c$ linearly independent eigenvalues.
+A $c \times c$ matrix $A$ is diagonalizable if and only if $A$ has $c$ linearly independent eigenvectors.
 
 Specifically, $A = PDP^{-1}$ with $D$ diagonal if and only if the columns of $P$ are $c$ linearly independent eigenvectors of $A$, which correspond with eigenvalues in the diagonal of $D$ (in matching left-to-right order).
 \end{theorem}
@@ -10178,7 +10192,7 @@ Other ways of ordering the eigenvectors and eigenvalues are fine, as long as the
 \columnbreak
 \end{notes}
 
-\example Show that a square matrix $A$ is invertible if and only iff 0 is an eigenvalue of $A$.
+\example Show that a square matrix $A$ is \emph{not} invertible iff 0 is an eigenvalue of $A$.
 
 \begin{book}
 \textbf{Solution.} The IMT says $A$ is invertible if and only if $\nul A = \left\{ \vec{0} \right\}$. In other words, if and only if the only solution to $A\vec{x}=\vec{0} = 0\vec{x}$ is $\vec{x}=\vec{0}$. So if $A$ is invertible, there's no eigenvector (which must be nonzero) to correspond with eigenvalue $0$, so 0 is not an eigenvalue. If $A$ is not invertible, there's a non-zero solution to $A\vec{x} = 0\vec{x}$, making 0 an eigenvalue. \blacksquare
@@ -10252,7 +10266,7 @@ Thus we've diagonalized $A^{-1}$. It has the same eigenvectors as $A$ (the colum
 \exatend Let $A = \begin{bmatrix}
 -1.5 & 5 \\
 -1 & 3
-\end{bmatrix}, \vec{u}=\bbvec{1}{-2}, \vec{v}=\bbvec{-2}{5}$.
+\end{bmatrix}, \vec{u}=\bbvec{5}{2}, \vec{v}=\bbvec{2}{1}$.
 \begin{enumerate}[label=(\alph*)]
 
 \item Show that $\vec{u}$ and $\vec{v}$ are eigenvectors of $A$ and find corresponding eigenvalues.
@@ -10276,9 +10290,9 @@ TODO: More basic T/F problems.
 
 \exatend (T/F?) If $AP = PD$ with $D$ diagonal, then $P$ is invertible.
 
-\exatend Let $A$ be the matrix that makes the transformation $T(\vec{x})=A\vec{x}$ a reflection across the $x_2$-axis. Diagonalize $A$. \hintfootnote{Drawing a picture might help you find eigenstuff.}
+\exatend Let $A$ be the $2\times 2$ matrix that makes the transformation $T(\vec{x})=A\vec{x}$ a reflection across the $x_2$-axis. Diagonalize $A$. \hintfootnote{Drawing a picture might help you find eigenstuff.}
 
-\exatend Let $A$ be the matrix that makes the transformation $T(\vec{x})=A\vec{x}$ a reflection across the line $x_2 =x_1$. Diagonalize $A$. \hintfootnote{Drawing a picture might help you find eigenstuff.}
+\exatend Let $A$ be the $2\times 2$ matrix that makes the transformation $T(\vec{x})=A\vec{x}$ a reflection across the line $x_2 =x_1$. Diagonalize $A$. \hintfootnote{Drawing a picture might help you find eigenstuff.}
 
 \exatend Let $A$ be the $2\times 2$ matrix so that $T(\vec{x})=A\vec{x}$ projects points onto the nearest point on the $x_2$-axis. For example, $A \bbvec{3}{4}=\bbvec{0}{4}$. Diagonalize $A$. \hintfootnote{Drawing a picture will help finding eigenstuff.}
 
@@ -10314,6 +10328,8 @@ TODO: More basic T/F problems.
 \exatend Let $A$ be a square matrix such that $A^n=A$ for some positive integer $n>1$. Show that if $\lambda$ is an eigenvalue of $A$, then $|\lambda|$ equals either $-1,0,$ or $1$. \creditfootnote{Inspired by K. Kuttler.}
 
 \exatend \label{exercise:4.2-rows-sum-to-k}Suppose that $A$ is a $c\times c$ matrix such that every row of $A$ adds up to the same number $k$. Show that $k$ is an eigenvalue of $A$ by finding a corresponding eigenvector.
+
+\exatend Suppose that $A$ is $c \times c$ and has $c$ linearly independent eigenvectors corresponding with $\lambda_1,\ldots,\lambda_c$. Show that the product $\lambda_1\lambda_2\cdots \lambda_c$ equals $\det(A)$.
 
 \newpage
 \section{Finding Eigenstuff}
@@ -10581,7 +10597,7 @@ Let's find an eigenvector $\vec{x}_1$ corresponding with $\lambda_1=\frac{1}{2}+
 \begin{bmatrix}
 \frac{-\sqrt{3}}{2}i & \frac{-\sqrt{3}}{2} \\
 \frac{\sqrt{3}}{2} & \frac{-\sqrt{3}}{2}i
-\end{bmatrix}
+\end{bmatrix}\vec{x}_1 &= \vec{0}
 \end{align*}
 By inspection, $\vec{x}_1=(i,1)$ works. Similarly, an eigenvalue corresponding with  $\lambda_2=\frac{1}{2}-\frac{\sqrt{3}}{2}i$ can be found to be $\vec{x}_2=(-i,1)$. So with $P = \begin{bmatrix}
 \vec{x}_1 & \vec{x}_2
@@ -10600,9 +10616,9 @@ i & -i \\
 \vfill
 \end{notes}
 
-In general, multiplication by complex numbers is an elegant and powerful way to represent rotation. In fact, it can be shown that $e^{at}(cos(bt) + i\sin(bt)) = e^{(a+bi)t}$, and functions of this form are solutions of many differential equations. And an important class of differential equations, called \emph{linear} differential equations, can be written in the form $\vec{y}'(t) = A\vec{y}(t)$, which are analogous to our linear difference equations, $\vec{y}_{n+1}=A\vec{y}_n$.
+In general, multiplication by complex numbers is an elegant and powerful way to represent rotation. In fact, it can be shown that $e^{at}(cos(bt) + i\sin(bt)) = e^{(a+bi)t}$, and functions of this form are solutions of many differential equations. And an important class of differential equations, called \emph{linear} differential equations, can be written in the form $\vec{y}'(t) = A\vec{y}(t)$, which are similar to our linear difference equations, $\vec{y}_{n+1}=A\vec{y}_n$.
 
-For this book, the above example (and a single exercise) is the only time we'll talk about complex numbers. But in a slightly more advanced linear algebra course, you'll learn that \emph{every} $c\times c$ matrix has $c$ complex eigenvalues (counting repeated factors in the characteristic equation); and there's a similar result for the analogous \emph{differential} equations.
+For this book, the above example (and a single exercise) is the only time we'll talk about complex numbers. But in a slightly more advanced linear algebra course, you'll learn that \emph{every} $c\times c$ matrix has $c$ complex eigenvalues (counting repeated factors in the characteristic equation), which is important for describing solutions of both difference equations and differential equations.
 
 \begin{notes}
 \columnbreak
@@ -10675,7 +10691,7 @@ But since not all of $x_1,\ldots,x_i$ are zero, we have some $x_k \ne 0$, with a
 \sin \theta & \cos \theta
 \end{bmatrix}$ be the rotation matrix that rotates points an angle $\theta$ around the origin. Find the characteristic polynomial. For what values of $\theta$ does $R_{\theta}$ have real eigenvalues? (If you did section \ref{sec:eigenstuff} exercise \ref{exercise:4.2-rotation}, check that your answers agree.)
 
-\exatend Find eigenvalues and corresponding eigenvectors of $A = \begin{bmatrix}
+\exatend Find the eigenvalues of $A = \begin{bmatrix}
 0 & 2 &-2 \\
 0 & 3 & 2 \\
 0 & 2 & -2
@@ -10684,7 +10700,7 @@ But since not all of $x_1,\ldots,x_i$ are zero, we have some $x_k \ne 0$, with a
 \exatend Write the characteristic equation of $A = \begin{bmatrix}
 1 & 2 & 3 \\
 4 & 5 & 6 \\
-7 & 8 & 9
+7 & 8 & 0
 \end{bmatrix}$. No need to solve or even simplify. The point of this problem is to show you that for most matrices bigger than $2\times 2$, the characteristic equation is an inefficient way to find eigenstuff. 
 
 \exatend (T/F?) If $\lambda$ is an eigenvalue of $A$, then every vector in $\nul ( A-\lambda I )$ is an eigenvector of $A$.
@@ -10921,7 +10937,7 @@ Like you saw in warm-up \ref{exercise:5.1-wu2}, in $\R^2$ this definition agrees
 If $k$ is a scalar and $\vec{u}$ is a vector, then:
 \begin{enumerate}[label=(\roman*)]
 \item $\nm{\vec{u}}^2=\vec{u}\cdot \vec{u}$
-\item $\nm{\vec{u}} = 0$ if and only if $\vec{u}=0$
+\item $\nm{\vec{u}} = 0$ if and only if $\vec{u}=\vec{0}$
 \item $\nm{k\vec{u}} = |k|\nm{\vec{u}}$
 \end{enumerate}
 \end{theorem}
@@ -11348,7 +11364,7 @@ By theorem \ref{theorem:5.1-orthogonal-span} the last statement is equivalent to
 
 (ii) The rows of $A$ are the columns of $A^T$, so:
 \begin{align*}
-\row(A) &= \col(A^T) \\
+\row(A)^{\perp} &= (\col A^T)^{\perp} \\
 &= \nul ( (A^T)^{T} ) \quad \text{(part (i))} \\
 &= \nul (A)
 \end{align*}
@@ -11465,7 +11481,7 @@ The one on the left makes $\dim((\col A)^{\perp})=1-1=0$ and the one on the righ
 
 \exatend (T/F?) $(\vec{u}\cdot \vec{u})^2=\nm{\vec{u}}$.
 
-\exatend (T/F?) For any scalar $k$, $\nm{k \vec{u}} = k \nm{\vec{u}}$.
+\exatend (T/F?) For any scalar $k$ and vector $\vec{u}$, $\nm{k \vec{u}} = k \nm{\vec{u}}$.
 
 
 \exatend (T/F?) The zero vector in $\R^c$ is orthogonal to every other vector in $\R^c$.
@@ -11478,7 +11494,7 @@ The one on the left makes $\dim((\col A)^{\perp})=1-1=0$ and the one on the righ
 
 \exatend \label{exercise:R3-length} Use the Pythagorean theorem to find the distance from $(0,0,0)$ to $(u_1,u_2,u_3)$, and check that it agrees with the definition of $||(u_1,u_2,u_3)||$. \hintfootnote{The points $(0,0,0),(u_1,u_2,0)$ and $(u_1,u_2,u_3)$ form a right triangle. You can use either the version of the Pythagorean theorem that you learned years ago, or the linear algebra version, thm \ref{theorem:pythagorean}.}
 
-\exatend Let $\vec{a}=(a_1,a_2)$ and $\vec{b}=(b_1,b_2)$ be two non-zero $\R^2$ vectors. Note that the slopes of the vectors are $\frac{a_2}{a_1}$ and $\frac{b_2}{b_1}$. You probably learned in an earlier class that two lines in $\R^2$ are perpendicular when their slopes are opposite reciprocals: $m_2= \frac{-1}{m_1}$. Show this is equivalent to $\vec{a}\cdot \vec{b}=0$. \creditfootnote{Inspired by an exercise in Gilbert Strang's excellent \emph{Linear Algebra and its Applications}.}
+\exatend Let $\vec{a}=(a_1,a_2)$ and $\vec{b}=(b_1,b_2)$ be two $\R^2$ vectors with $a_1 \ne 0$ and $b_1 \ne 0$. Note that the slopes of the vectors are $\frac{a_2}{a_1}$ and $\frac{b_2}{b_1}$. You probably learned in an earlier class that two lines in $\R^2$ are perpendicular when their slopes are opposite reciprocals: $m_2= \frac{-1}{m_1}$. Show this is equivalent to $\vec{a}\cdot \vec{b}=0$. \creditfootnote{Inspired by an exercise in Gilbert Strang's excellent \emph{Linear Algebra and its Applications}.}
 
 \exatend Give an example of two vectors that are linearly independent but not orthogonal.
 
@@ -11512,7 +11528,7 @@ The one on the left makes $\dim((\col A)^{\perp})=1-1=0$ and the one on the righ
 \exatend Let $A = \begin{bmatrix}
 10 & 5 \\
 -2 & -1
-\end{bmatrix}$. Find one vector in each of:
+\end{bmatrix}$. Find one nonzero vector in each of:
 \begin{enumerate}[label=(\alph*)]
 \item $(\col(A))^{\perp}$
 \item $(\nul A)^{\perp}$
@@ -11523,11 +11539,11 @@ The one on the left makes $\dim((\col A)^{\perp})=1-1=0$ and the one on the righ
 1 & 2 & 3 \\
 4 & 5 & 6 \\
 3 & 3 & 3
-\end{bmatrix}$. Note the second row minus the first row equals the third row. And the third column is the opposite of the first column plus twice the second column. Find one vector in each of:
+\end{bmatrix}$. Note the second row minus the first row equals the third row. And the third column is the opposite of the first column plus twice the second column. Find one nonzero vector in each of:
 \begin{enumerate}[label=(\alph*)]
 \item $(\col(A))^{\perp}$
-\item $(\nul(A))^{\perp}$
 \item $(\row(A))^{\perp}$
+\item $(\nul(A))^{\perp}$
 \end{enumerate}
 
 \exatend Suppose $A$ is a $10 \times 15$ matrix with $\rank(A) = 6$. Find $\dim(\nul(A))$ and $\dim(\nul(A^T))$.
@@ -11585,15 +11601,15 @@ The one on the left makes $\dim((\col A)^{\perp})=1-1=0$ and the one on the righ
 \begin{notes}
 \vfill
 \end{notes}
-\exercise (\emph{Warm-up}) If $\vec{v}$ is a unit vector, then $\vec{v}\cdot \vec{v} = 1$.
+\exercise (\emph{Warm-up}) (T/F?) If $\vec{v}$ is a unit vector, then $\vec{v}\cdot \vec{v} = 1$.
 
 \begin{notes}
 \vfill
 \end{notes}
 \exercise (\emph{Warm-up}) Let $\vec{u}=\bbvec{4}{0}$ and $\vec{v}=\bbvec{2}{3}$.
 \begin{enumerate}[label=(\alph*)]
-\item Is $\vec{u}$ orthogonal to $\vec{v}$?
-\item Find $\vec{v}-\frac{\vec{u}\cdot \vec{v}}{\vec{u}\cdot \vec{u}}\vec{u}$. Is it orthogonal to $\vec{v}$?
+\item Is $\vec{v}$ orthogonal to $\vec{u}$?
+\item Find $\vec{v}-\frac{\vec{u}\cdot \vec{v}}{\vec{u}\cdot \vec{u}}\vec{u}$. Is it orthogonal to $\vec{u}$?
 \end{enumerate}
 
 \begin{notes}
@@ -11727,7 +11743,10 @@ Since $\vec{w}\ne \hat{y}$, we know $\nm{\vec{w}-\hat{y}}^2>0$, so $\nm{\vec{y}-
 \begin{book}
 \textbf{Solution.} (a) $\vec{v}=\frac{4(1)+5(0)+6(0)}{1(1)+0(0)+0(0)}\bbbvec{1}{0}{0} + \frac{4(0)+5(1)+6(0)}{0(0)+1(1)+0(0)}\bbbvec{0}{1}{0} = \bbbvec{4}{5}{0}$.
 
-$\vec{y}-\vec{v} =\bbbvec{4}{5}{6}-\bbbvec{4}{5}{0}= \bbbvec{0}{0}{6}$. \blacksquare
+$\vec{y}-\vec{v} =\bbbvec{4}{5}{6}-\bbbvec{4}{5}{0}= \bbbvec{0}{0}{6}$. 
+
+(b) TODO!
+\blacksquare
 %Any vector in $W$ (the $x_1x_2-plane$) including $\proj_W\vec{y}$ must be of the form $(x_1,x_2,0)$. And $W^{\perp}$ is the set of vectors perpendicular to $\vec{e}_1$ and $\vec{e}_2$, which must be $\spn ( \vec{e}_3 )$. 
 \end{book}
 
@@ -11784,10 +11803,10 @@ Then to see that they're unit vectors:
 \begin{book}
 Using the row-column rule:
 \[UU^T = \begin{bmatrix}
-3/4 & 1/4 & 1/4 & 1/4 \\
-1/4 & 3/4 & -1/4 & -1/4 \\
+3/4 & 1/4 & 1/4 & -1/4 \\
+1/4 & 3/4 & -1/4 & 1/4 \\
 1/4 & -1/4 & 3/4 & 3/4 \\
-1/4 & -1/4 & 3/4 & 3/4
+-1/4 & 1/4 & 3/4 & 3/4
 \end{bmatrix}\]
 Notice that $UU^T$ is \emph{symmetric}, which means the entry in row $i$, column $j$ is equal to the entry in row $j$, column $i$. In other words, $( UU^T )^T = UU^T$. This will be important in the next chapter. For $U^TU$, let's show some more work, which will help justify the theorem below.
 \begin{align*}
@@ -11825,7 +11844,7 @@ The proof of the case where $U$ has three columns was done in the last example. 
 
 \begin{theorem}[Orthogonal projection formula.]\label{theorem:orthogonal-projection-formula}
 
-If $\vec{u}_1,\ldots,\vec{u}_c$ is an orthogonal basis of a subspace $W$ of $\R^r$, and $\vec{y}$ is in $\R^n$, then:
+If $\vec{u}_1,\ldots,\vec{u}_c$ is an orthogonal basis of a subspace $W$ of $\R^r$, and $\vec{y}$ is in $\R^r$, then:
 \[\proj_W\vec{y}=\frac{\vec{u}_1\cdot \vec{y}}{\vec{u}_1\cdot \vec{u}_1}\vec{u}_1+\cdots + \frac{\vec{u}_c\cdot \vec{y}}{\vec{u}_c\cdot \vec{u}_c}\vec{u}_c\]
 \end{theorem}
 
@@ -11839,7 +11858,7 @@ Note that if $\vec{u}_1,\ldots,\vec{u}_c$ is an ortho\emph{normal} basis of $W$,
 \[\proj_W\vec{y}=\hat{y}=x_1\vec{u}_1+\cdots+x_c\vec{u}_c\]
 We want to show that each  $x_i= \frac{\vec{u}_i\cdot\vec{y}}{\vec{u}_i\cdot \vec{u}_i}$. A good strategy when trying to prove things about orthogonal lists is to make dot products that you know are zero. Let $\vec{u}_i$ be one of the basis vectors. Its dot product with $\hat{y}$ is:
 \begin{align*}
-\vec{u}_i\cdot \hat{y} &= \vec{u}_i\cdot ( \hat{y}=x_1\vec{u}_1+\cdots+x_n\vec{u}_n ) \\
+\vec{u}_i\cdot \hat{y} &= \vec{u}_i\cdot ( x_1\vec{u}_1+\cdots+x_n\vec{u}_n ) \\
 \vec{u}_i\cdot \hat{y}&=x_1\vec{u}_i\cdot \vec{u}_1 + \cdots + x_i\vec{u}_i\cdot \vec{u}_i + \cdots + x_c\vec{u}_i\cdot \vec{u}_c \\
 \vec{u}_i\cdot \hat{y}&= 0 + \cdots + 0 + c_i\vec{u}_i\cdot \vec{u}_i + 0 + \cdots + 0
 \end{align*}
@@ -11932,7 +11951,7 @@ Note that theorem \ref{theorem:projections} guarantees that $\hat{y}=A\hat{x}$ e
 
 \begin{theorem}[Least-squares solutions.]\label{theorem:least-squares}
 
-Let $A$ be an $r\times c$ matrix, and $\vec{y}$ be a vector in $\R^r$. Then $A^TA\hat{x}=A^T\vec{y}$ if and only if $A\hat{x} = \proj_{\col A}\vec{y}$, which is the closest point in $\col A$ to $\vec{y}$ \,(that is, $\nm{\vec{y}-A\hat{x}}<\nm{\vec{y}-A\vec{x}}$ for any $\vec{x}\ne \hat{x}$).
+Let $A$ be an $r\times c$ matrix, and $\vec{y}$ be a vector in $\R^r$. Then $A^TA\hat{x}=A^T\vec{y}$ if and only if $A\hat{x} = \proj_{\col A}\vec{y}$, which is the closest point in $\col A$ to $\vec{y}$ \,(that is, $\nm{\vec{y}-A\hat{x}} \le \nm{\vec{y}-A\vec{x}}$ for any $\vec{x}\ne \hat{x}$).
 
 \textbf{Definition.} The $\hat{x}$ described in the theorem is called the \textbf{least-squares solution} of the equation $A\vec{x}=\vec{b}$, because it minimizes $\nm{\vec{y}-A\hat{x}}$, whose formula involves a sum of squares.
 \end{theorem}
@@ -12067,7 +12086,7 @@ So we have an infinite number of least-squares solutions, such as, with $x_3=0$,
 \end{bmatrix}$. Is the list $\vec{u}_1,\vec{u}_2$ orthogonal? Is it orthonormal? Find $U^TU$.
 
 \exatend \label{exercise:5.2basic-ortho}Let $U= \begin{bmatrix}
-\vec{u}_1 & \vec{u}_2 & \vec{u}_3
+\vec{u}_1 & \vec{u}_2 
 \end{bmatrix} = \begin{bmatrix}
 -1/3 & 2/3 \\
 2/3 & -1/3 \\
@@ -12094,7 +12113,7 @@ So we have an infinite number of least-squares solutions, such as, with $x_3=0$,
 
 \begin{theorem}[Orthogonal lists are independent.]\label{theorem:orthogonal-lists-are-independent}
 
-If $\vec{u}_1,\ldots,\vec{u}_n$ is an orthogonal list of vectors, then it's linearly independent too.
+If $\vec{u}_1,\ldots,\vec{u}_n$ is an orthogonal list of non-zero, then it's linearly independent too.
 \end{theorem}
 \exatend Suppose $U$ is an $r \times c$ matrix with orthogonal columns.
 \begin{enumerate}[label=(\alph*)]
@@ -12107,7 +12126,7 @@ If $\vec{u}_1,\ldots,\vec{u}_n$ is an orthogonal list of vectors, then it's line
 \end{bmatrix}$ and is a matrix with orthonormal columns, and let $W = \col U$. Show that the formula in theorem \ref{theorem:orthogonal-projection-formula} can be written $\proj_W\vec{y}= UU^T\vec{y}$. \hintfootnote{$U(U^T\vec{y})$.}
 
 \exatend Let $U= \begin{bmatrix}
-\vec{u}_1 & \vec{u}_2 & \vec{u}_3
+\vec{u}_1 & \vec{u}_2 
 \end{bmatrix} = \begin{bmatrix}
 -1/3 & 2/3 \\
 2/3 & -1/3 \\
@@ -12192,7 +12211,7 @@ For problems \ref{exercise:5.2least-squares-TF-start} to \ref{exercise:5.2least-
 % 2 cool problems below
 \exatend Let $\vec{u}=\bbbvec{3}{2}{3}$ and $\vec{y}=\bbbvec{3}{1}{0}$.
 \begin{enumerate}[label=(\alph*)]
-\item Use the projection formula in \ref{theorem:orthogonal-projection-formula} to find $\proj_{\col \vec{u}}\vec{y}$.
+\item Use the projection formula in theorem \ref{theorem:orthogonal-projection-formula} to find $\proj_{\col \vec{u}}\vec{y}$.
 \item Solve $\vec{u}^T\vec{u}x=\vec{u}^T\vec{y}$\, to find a least-squares solution to $\vec{u}x=\vec{y}$, and find $\proj_{\col \vec{u}}\vec{y}$. Note the similarities to part (a).
 \end{enumerate}
 
@@ -12205,7 +12224,7 @@ For problems \ref{exercise:5.2least-squares-TF-start} to \ref{exercise:5.2least-
 1 \\ 2 \\ 3 \\ 4
 \end{bmatrix}$. Find $\proj_{\col U}\vec{y}$ two ways:
 \begin{enumerate}[label=(\alph*)]
-\item Notice that the columns of $U$ are orthogonal. Use the projection formula in \ref{theorem:orthogonal-projection-formula}.
+\item Notice that the columns of $U$ are orthogonal. Use the projection formula in theorem  \ref{theorem:orthogonal-projection-formula}.
 \item Solve $U^TU\hat{x}=U^T\vec{y}$\, to find a least-squares solution to $U\vec{x}=\vec{y}$, and multiply it by $U$. Note the similarities to part (a).
 \end{enumerate}
 
@@ -12336,14 +12355,27 @@ x y
 \end{tikzpicture}
 
 Fortunately, we have a good way describe how big/small a big list of numbers is--the length of a vector! The goal is to minimize:
+\begin{book}
 \[\nm{\textcolor{red}{\bbbvec{y_1-(b+mx_1)}{\vdots}{y_c-(b+mx_c)}}} = \nm{\bbbvec{y_1}{\vdots}{y_c} - \textcolor{blue}{\bbbvec{b+mx_1}{\vdots}{b+mx_c}}}\]
+\end{book}
+\begin{notes}
+
+\vspace{8em}
+\end{notes}
+
 We can use what we know about matrix-vector multiplication to help with this if we denote:
+\begin{book}
 \[ \vec{y}=\bbbvec{y_1}{\vdots}{y_c}, \quad A = \begin{bmatrix}
 1 & x_1 \\
 1 & x_2 \\
 \vdots & \vdots \\
 1 & x_c
 \end{bmatrix}, \quad \hat{\beta} =\bbvec{b}{m}\] 
+\end{book}
+\begin{notes}
+
+\vspace{8em}
+\end{notes}
 Here $A$ is called the \textbf{design matrix}. So, we want to find $\hat{\beta}$ that minimizes the error:
 \[\nm{\vec{y}-\textcolor{blue}{A\hat{\beta}}}\]
 In other words, to make $\hat{y} = b + mx$ best fit the data, we want to find $\hat{\beta}$, the \emph{least-squares solution} of $A\vec{\beta}=\vec{y}$.
@@ -12424,6 +12456,12 @@ We can write this as an augmented matrix and row-reduce:
 This gives the unique solution $b=5,m=-2$, so the least-squares regression line is $\hat{y}=5-2x$, which is indeed the equation of the line that includes the data points. \blacksquare
 \end{book}
 
+\begin{notes}
+\vfill
+\newcolumn
+\end{notes}
+
+
 The next example shows that we can use the same method for finding best-fit functions for multi-variable data.
 \example \label{example:best-fit-plane} Use equation \ref{eq:regression} To find the best-fit linear function of two variables, of the form $\hat{z} =b + mx + ny$ for some constants $b,m,n$, for the following data points. Also find the \emph{least-squares error}, $\nm{\vec{z}-\hat{z}}$.
 \begin{align*}
@@ -12493,6 +12531,10 @@ So the least-squares error is:
  \blacksquare
 \end{book}
 
+\begin{notes}
+\vfill
+\newcolumn
+\end{notes}
 In fact, the method of equation \ref{eq:regression} works for finding many kinds (but not all kinds) of best-fit functions.
 
 \example \label{example:design-matrix} Describe the design matrix you would use to find the best-fit function of the form $\hat{y}=a\cos(x) + b\sin(x)$ for the data points $(x_1,y_1), (x_2,y_2), \ldots, (x_c,y_c)$.
@@ -12520,6 +12562,8 @@ So, by plugging data values into the design matrix
 \end{bmatrix}\]
 we could solve $A^TA\hat{\beta}=A^T\vec{y}$ for $\hat{\beta}=(a,b)$ to find the best-fit function. \blacksquare
 \end{book}
+
+
 
 The above methods are pretty flexible and powerful, but they don't cover every kind of curve fitting problem. For example, if you want to find a best-fit function of the form $\hat{y}=\cos(ax+b)$, there is no way to construct a design matrix that works:
 \[\bbbvec{\cos(ax_1+b)}{\vdots}{\cos(ax_c+b)} = \begin{bmatrix}
@@ -12987,7 +13031,7 @@ then the vector $(x_1,\ldots, x_c)$ is called the \textbf{$\mathcal{B}$-coordina
 \begin{book}
 \textbf{Solution.} (a) Since we can write it as $\pi + 0z +(-7)z^2+0z^3$, we have $\left[ \pi - 7z^2 \right]_{\mathcal{B}} = (\pi,0,-7,0)$.
 
-(b) $\vec{y} = 5 + 4z + 3z^2+2$. \blacksquare
+(b) $\vec{y} = 5 + 4z + 3z^2+2z^3$. \blacksquare
 \end{book}
 
 \begin{notes}
@@ -13136,7 +13180,7 @@ This has the unique solution $(x_1,x_2,x_3) = (0,0,0)$, and by theorem \ref{theo
 
 \exatend (T/F?) Every vector space is a subspace of itself.
 
-\exatend (T/F?) The list of polynomials $z,5z^2$ is linearly dependent because $-5z$ and $1$ are scalars that make $-z(z)+1(5z^2) = \vec{0}$.
+\exatend (T/F?) The list of polynomials $z,5z^2$ is linearly dependent because $-5z$ and $1$ are scalars that make $-5z(z)+1(5z^2) = \vec{0}$.
 
 \exatend (T/F?) In $\Poly_2$, the function $\vec{f}(z) = 3z^2$ is the zero vector because $\vec{f}(0)=0$.
 
@@ -13238,13 +13282,13 @@ Is $\mathbb{I}$ a vector space? Justify your answer. \creditfootnote{Credit: Ins
 
 In this section, we'll expand the notion of linear transformations to abstract vector spaces, and see how they are essentially the same as the $\R^c\rightarrow \R^r$ linear transformations introduced in section \ref{sec:matrix-vector-products} and studied throughout the book. First let's warm up with a review.
 
-\exercise (\emph{Warm-up}) (T/F?) If $A$ is a $c \times r$ matrix, then $T(\vec{x}) = A\vec{x}$ is an $\R^c\rightarrow \R^r$ linear transformation.
+\exercise (\emph{Warm-up}) (T/F?) If $A$ is an $r \times c$ matrix, then $T(\vec{x}) = A\vec{x}$ is an $\R^c\rightarrow \R^r$ linear transformation.
 
 \begin{notes}
 \vspace{1em}
 \end{notes}
 
-\exercise (\emph{Warm-up}) (T/F?) If $T:\R^c\rightarrow \R^r$ is a linear transformation, then there is a $c\times r$ matrix $A$ such that $T(\vec{x})=A\vec{x}$.
+\exercise (\emph{Warm-up}) (T/F?) If $T:\R^c\rightarrow \R^r$ is a linear transformation, then there is an $r\times c$ matrix $A$ such that $T(\vec{x})=A\vec{x}$.
 
 \begin{notes}
 \vspace{1em}
@@ -13487,7 +13531,7 @@ The proof is left as an exercise.
 \example Let $T:\Poly_3\rightarrow \Poly_3$ be the second derivative, that is, $T(\vec{p}(z)) = \frac{d^2}{dz^2}\vec{p}(z)$, and let $\mathcal{B}$ and $\mathcal{D}$ both equal $( 1,z,z^2,z^3 )$, the standard basis of $\Poly_3$.
 \begin{enumerate}[label=(\alph*)]
 \item Find $A$, the matrix of $T$ relative to $\mathcal{B}$ and $\mathcal{D}$.
-\item Find basis for the null space and column space of $A$.
+\item Find bases for the null space and column space of $A$.
 \item Find bases for the null space and range of $T$.
 \end{enumerate}
 
